@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_1"
+        android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
         android:title="Home" />
 
     <item
-        android:id="@+id/navigation_4"
-        android:icon="@drawable/ic_work"
-        android:title="Brand" />
+        android:id="@+id/navigation_accounts"
+        android:icon="@drawable/ic_person"
+        android:title="Accounts" />
 
     <item
-        android:id="@+id/navigation_3"
-        android:icon="@drawable/ic_shopping_cart"
+        android:id="@+id/navigation_deals"
+        android:icon="@drawable/ic_work"
         android:checked="true"
-        android:title="Cart" />
+        android:title="Deals" />
     <item
-        android:id="@+id/navigation_5"
-        android:icon="@drawable/ic_person"
-        android:title="Account" />
+        android:id="@+id/navigation_more"
+        android:icon="@drawable/ic_add"
+        android:title="More" />
 
 </menu>

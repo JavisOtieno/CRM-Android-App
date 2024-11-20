@@ -1,0 +1,8 @@
+package com.example.crm;
+
+import okhttp3.ResponseBody;
+
+public interface OnSuccessListener {
+    void onSuccess(ResponseBody responseBody);
+}
+

@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CRMTEST"
+rootProject.name = "CRM"
 include(":app")
  
