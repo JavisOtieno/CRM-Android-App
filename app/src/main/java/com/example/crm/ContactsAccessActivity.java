@@ -2,6 +2,7 @@ package com.example.crm;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -129,6 +130,13 @@ public class ContactsAccessActivity extends AppCompatActivity {
                 public void onItemClick(View view, Contact obj, int position) {
                     Toasts.toastIconError(ContactsAccessActivity.this,
                             obj.getName()+" "+obj.getPhoneNumber());
+
+                    Intent intent = new Intent(ContactsAccessActivity.this,
+                            AddContactActivity.class);
+                    intent.putExtra("contactName",obj.getName());
+                    intent.putExtra("contactPhone",obj.getPhoneNumber());
+                    startActivity(intent);
+
                 }
             });
 

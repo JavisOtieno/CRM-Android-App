@@ -48,6 +48,7 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
     private String account;
     private String contact;
     private String status;
+    private String dateToBeSaved;
 
     private Integer checkedStatus=-1;
     private Integer checkedType=-1;
@@ -102,11 +103,29 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
         });
 
         EditText timeInput = findViewById(R.id.timeInput);
+        Calendar calendar = Calendar.getInstance();
+        int hourNow = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuteNow = calendar.get(Calendar.MINUTE);
+        int yearNow = calendar.get(Calendar.YEAR);
+        int monthNow = calendar.get(Calendar.MONTH);
+        int dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Display the current date in EditText
+        timeInput.setText(String.format(Locale.getDefault(), "%02d:%02d",
+                hourNow, minuteNow));
+
+
+
 
         timeInput.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
+
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
+
+            // Display the current date in EditText
+            timeInput.setText(String.format(Locale.getDefault(), "%02d:%02d",
+                    hour, minute));
+
 
             TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                     (view, selectedHour, selectedMinute) -> {
@@ -118,16 +137,25 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
 
         EditText dateInput = findViewById(R.id.dateInput);
 
+        dateInput.setText(String.format(Locale.getDefault(), "%02d-%02d-%04d",
+                dayNow, monthNow + 1, yearNow));
+        dateToBeSaved=String.format(Locale.getDefault(), "%04d-%02d-%02d",
+                yearNow, monthNow + 1,dayNow);
+
         dateInput.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
+//            Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                     (view, selectedYear, selectedMonth, selectedDay) -> {
                         // Set selected date to EditText
-                        dateInput.setText(String.format(Locale.getDefault(), "%02d-%02d-%04d", selectedDay, selectedMonth + 1, selectedYear));
+                        dateInput.setText(String.format(Locale.getDefault(), "%02d-%02d-%04d",
+                                selectedDay, selectedMonth + 1, selectedYear));
+                        dateToBeSaved=String.format(Locale.getDefault(), "%04d-%02d-%02d",
+                                selectedYear, selectedMonth + 1, selectedDay);
                     }, year, month, day);
 
             datePickerDialog.show();
@@ -149,7 +177,7 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                     String type = typeEditText.getText().toString().toLowerCase();
                     account = selectedAccountId;
                     contact = selectedContactId;
-                    String date = dateInput.getText().toString();
+//                    String date = dateInput.getText().toString();
                     String time = timeInput.getText().toString();
                     String description = descriptionEditText.getText().toString();
                     String location = locationEditText.getText().toString();
@@ -166,7 +194,7 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                         requestBody.put("account_id",account);
                         requestBody.put("description",description);
                         requestBody.put("location",location);
-                        requestBody.put("date",date);
+                        requestBody.put("date",dateToBeSaved);
                         requestBody.put("time",time);
                     } catch (JSONException e) {
                         e.printStackTrace();

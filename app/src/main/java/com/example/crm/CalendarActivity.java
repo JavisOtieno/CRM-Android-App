@@ -74,7 +74,7 @@ public class CalendarActivity extends AppCompatActivity implements OnSuccessList
                 // Trigger your action here
                 String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year; // Month is 0-based
                 selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                Toast.makeText(CalendarActivity.this, "Selected date: " + selectedDate, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CalendarActivity.this, "Selected date: " + selectedDate, Toast.LENGTH_SHORT).show();
 
                 // Call your action method here
 //                performActionBasedOnDate(selectedDate);

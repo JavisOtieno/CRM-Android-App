@@ -70,6 +70,26 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
         phoneEditText = (EditText)findViewById(R.id.phoneEditText);
         accountEditText = (EditText)findViewById(R.id.accountEditText);
 
+        String contactName = getIntent().getStringExtra("contactName");
+        if (contactName == null || contactName.isEmpty()) {
+            // Handle the case where contactName is null or empty
+            Log.d("Contact", "Contact name is not provided.");
+        } else {
+            // Proceed with the non-null contactName
+            Log.d("Contact", "Contact name: " + contactName);
+            nameEditText.setText(contactName);
+
+        }
+        String contactPhone = getIntent().getStringExtra("contactPhone");
+        if (contactPhone == null || contactPhone.isEmpty()) {
+            // Handle the case where contactName is null or empty
+            Log.d("Contact", "Contact phone is not provided.");
+        } else {
+            // Proceed with the non-null contactName
+            phoneEditText.setText(contactPhone);
+            Log.d("Contact", "Contact phone: " + contactPhone);
+        }
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

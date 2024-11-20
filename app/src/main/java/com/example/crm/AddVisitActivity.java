@@ -1,5 +1,7 @@
 package com.example.crm;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +24,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.ResponseBody;
 
@@ -41,6 +45,8 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
     private String account;
     private String location;
     private String status;
+    private String time;
+    private String dateToBeSaved;
 
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
@@ -83,6 +89,65 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
             }
         });
 
+        EditText timeInput = findViewById(R.id.timeInput);
+        Calendar calendar = Calendar.getInstance();
+        int hourNow = calendar.get(Calendar.HOUR_OF_DAY);
+        int minuteNow = calendar.get(Calendar.MINUTE);
+        int yearNow = calendar.get(Calendar.YEAR);
+        int monthNow = calendar.get(Calendar.MONTH);
+        int dayNow = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Display the current date in EditText
+        timeInput.setText(String.format(Locale.getDefault(), "%02d:%02d",
+                hourNow, minuteNow));
+
+
+
+
+        timeInput.setOnClickListener(v -> {
+
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+
+            // Display the current date in EditText
+            timeInput.setText(String.format(Locale.getDefault(), "%02d:%02d",
+                    hour, minute));
+
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                    (view, selectedHour, selectedMinute) -> {
+                        timeInput.setText(String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute));
+                    }, hour, minute, true);
+
+            timePickerDialog.show();
+        });
+
+        EditText dateInput = findViewById(R.id.dateInput);
+
+        dateInput.setText(String.format(Locale.getDefault(), "%02d-%02d-%04d",
+                dayNow, monthNow + 1, yearNow));
+        dateToBeSaved=String.format(Locale.getDefault(), "%04d-%02d-%02d",
+                yearNow, monthNow + 1,dayNow);
+
+        dateInput.setOnClickListener(v -> {
+//            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    (view, selectedYear, selectedMonth, selectedDay) -> {
+                        // Set selected date to EditText
+                        dateInput.setText(String.format(Locale.getDefault(), "%02d-%02d-%04d",
+                                selectedDay, selectedMonth + 1, selectedYear));
+                        dateToBeSaved=String.format(Locale.getDefault(), "%04d-%02d-%02d",
+                                selectedYear, selectedMonth + 1, selectedDay);
+                    }, year, month, day);
+
+            datePickerDialog.show();
+        });
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +162,7 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                     status = statusEditText.getText().toString().toLowerCase();
                     account = selectedAccountId;
                     location = selectedLocationId;
+                    time = timeInput.getText().toString();
 
                     System.out.println("Request Body: "+status+", "+account+", "+location);
 
@@ -104,6 +170,8 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                     try {
                         requestBody.put("status", status);
                         requestBody.put("location_id", location);
+                        requestBody.put("date",dateToBeSaved);
+                        requestBody.put("time",time);
                         requestBody.put("account_id",account);
                     } catch (JSONException e) {
                         e.printStackTrace();

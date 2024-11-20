@@ -81,6 +81,34 @@
                 android:paddingLeft="@dimen/spacing_middle"
                 android:paddingRight="@dimen/spacing_middle" />
 
+            <EditText
+                android:id="@+id/dateInput"
+                style="@style/EditText.Flat.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/edit_text_round_bg_white"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="Date"
+                android:paddingLeft="@dimen/spacing_middle" />
+
+            <EditText
+                style="@style/EditText.Flat.Grey"
+                android:id="@+id/timeInput"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/edit_text_round_bg_white"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:hint="Time"
+                android:inputType="time"
+                android:focusable="false"
+                android:clickable="true"
+                android:paddingLeft="@dimen/spacing_middle"
+                android:paddingRight="@dimen/spacing_middle"
+                />
+
+
 
 
 
