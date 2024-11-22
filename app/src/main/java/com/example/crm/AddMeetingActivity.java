@@ -382,6 +382,11 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
 
     }
 
+    @Override
+    public void onComplete() {
+        isTaskRunning = false;
+    }
+
     private void showAccountDialog(final View v,String[] accountOptions, String[] Ids,
                                    String title) {
         final String[] array = accountOptions;

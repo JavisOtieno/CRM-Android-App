@@ -269,4 +269,9 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
         }
 
     }
+
+    @Override
+    public void onComplete() {
+        isTaskRunning = false;
+    }
 }

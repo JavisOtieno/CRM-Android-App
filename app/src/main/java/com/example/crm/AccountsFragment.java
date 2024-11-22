@@ -512,6 +512,11 @@ public class AccountsFragment extends Fragment implements OnSuccessListener  {
 
     }
 
+    @Override
+    public void onComplete() {
+
+    }
+
 
 //    @Override
 //    public void onSaveInstanceState(Bundle outState) {

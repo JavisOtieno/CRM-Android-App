@@ -114,4 +114,9 @@ public class IndividualContactActivity extends AppCompatActivity implements OnSu
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void onComplete() {
+
     }
+}

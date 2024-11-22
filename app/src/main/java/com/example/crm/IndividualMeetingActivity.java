@@ -12,6 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import okhttp3.ResponseBody;
 
@@ -22,6 +24,11 @@ public class IndividualMeetingActivity extends AppCompatActivity
     private TextView accountNameTextView;
     private TextView contactNameTextView;
     private TextView statusTextView;
+    private TextView typeTextView;
+    private TextView dateTextView;
+    private TextView timeTextView;
+    private TextView locationTextView;
+    private TextView descriptionTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,11 @@ public class IndividualMeetingActivity extends AppCompatActivity
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
         statusTextView = (TextView) findViewById(R.id.statusTextView);
+        typeTextView = (TextView) findViewById(R.id.typeTextView);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
+        locationTextView = (TextView) findViewById(R.id.locationTextView);
+        timeTextView = (TextView) findViewById(R.id.timeTextView);
+        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
 
 
         NetworkUtils.
@@ -87,8 +99,22 @@ public class IndividualMeetingActivity extends AppCompatActivity
                     contactNameTextView.setText(meeting.getJSONObject("contact")
                             .getString("name"));
                     String status = meeting.getString("status");
-                    statusTextView.setText(status.substring(0, 1).toUpperCase() +
-                            status.substring(1).toLowerCase());
+                    status = status.substring(0, 1).toUpperCase() +
+                            status.substring(1).toLowerCase();
+                    statusTextView.setText(status);
+                    String type = meeting.getString("type");
+                    type = type.substring(0, 1).toUpperCase() +
+                            type.substring(1).toLowerCase();
+                    typeTextView.setText(type);
+                    locationTextView.setText(meeting.getString("location"));
+                    descriptionTextView.setText(meeting.getString("description"));
+
+                    timeTextView.setText(meeting.getString("time"));
+
+                    String dateFromDB = meeting.getString("date");
+                    LocalDate localDate = LocalDate.parse(dateFromDB, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+                    dateTextView.setText(formattedDate);
 
 
                 }
@@ -119,6 +145,11 @@ public class IndividualMeetingActivity extends AppCompatActivity
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    @Override
+    public void onComplete() {
 
     }
 }

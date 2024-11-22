@@ -23,6 +23,9 @@ implements OnSuccessListener{
     private TextView accountNameTextView;
     private TextView contactNameTextView;
     private TextView statusTextView;
+    private TextView descriptionTextView;
+    private TextView dateTextView;
+    private TextView timeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,9 @@ implements OnSuccessListener{
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
         statusTextView = (TextView) findViewById(R.id.statusTextView);
+        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
+        timeTextView = (TextView) findViewById(R.id.timeTextView);
 
         NetworkUtils.
                 fetchDataGet("task/"+taskId,
@@ -86,8 +92,13 @@ implements OnSuccessListener{
                     contactNameTextView.setText(task.getJSONObject("contact")
                             .getString("name"));
                     String status = task.getString("status");
-                    statusTextView.setText(status.substring(0, 1).toUpperCase() +
-                            status.substring(1).toLowerCase());
+                    status = status.substring(0, 1).toUpperCase() +
+                            status.substring(1).toLowerCase();
+                    statusTextView.setText(status);
+
+                    descriptionTextView.setText(task.getString("description"));
+                    dateTextView.setText(task.getString("date"));
+                    timeTextView.setText(task.getString("time"));
 
 
                 }
@@ -118,5 +129,10 @@ implements OnSuccessListener{
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

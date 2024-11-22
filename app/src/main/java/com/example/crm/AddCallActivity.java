@@ -227,6 +227,11 @@ public class AddCallActivity extends AppCompatActivity implements OnSuccessListe
     }
 
     @Override
+    public void onComplete() {
+        isTaskRunning = false;
+    }
+
+    @Override
     public void onSuccess(ResponseBody responseBody) {
 
         String responseBodyString = null;

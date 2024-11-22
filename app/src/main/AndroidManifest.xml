@@ -20,12 +20,32 @@
         android:usesCleartextTraffic="false"
         tools:targetApi="31">
         <activity
+            android:name=".IndividualLeadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddLeadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LeadsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StatsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IndividualLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddLocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LocationsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddTaskActivity"
             android:exported="false" />
         <activity
             android:name=".AddVisitActivity"
             android:exported="false" />
-
         <activity
             android:name=".AddCallActivity"
             android:exported="false" />
@@ -50,7 +70,6 @@
         <activity
             android:name=".IndividualMeetingActivity"
             android:exported="false" />
-
         <activity
             android:name=".IndividualCallActivity"
             android:exported="false" />

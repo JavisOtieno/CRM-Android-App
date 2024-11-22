@@ -367,4 +367,9 @@ public class TasksActivity extends AppCompatActivity implements OnSuccessListene
         }
 
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

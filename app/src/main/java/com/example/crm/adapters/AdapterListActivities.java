@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.crm.models.Account;
 import com.example.crm.R;
 
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class AdapterListActivities extends RecyclerView.Adapter<RecyclerView.Vie
         public OriginalViewHolder(View v) {
             super(v);
             image = (ImageView) v.findViewById(R.id.image);
-            accountName = (TextView) v.findViewById(R.id.accountName);
+            accountName = (TextView) v.findViewById(R.id.leadName);
             contact = (TextView) v.findViewById(R.id.contact);
             time = (TextView) v.findViewById(R.id.time);
             lyt_parent = (View) v.findViewById(R.id.lyt_parent);

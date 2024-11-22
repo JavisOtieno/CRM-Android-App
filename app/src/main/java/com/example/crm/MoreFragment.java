@@ -30,13 +30,16 @@ public class MoreFragment extends Fragment {
     private View view;
     private LinearLayout calendarLayout;
     private LinearLayout contactsLayout;
-    private LinearLayout contactsTestLayout;
+//    private LinearLayout contactsTestLayout;
+    private LinearLayout locationsLayout;
     private LinearLayout callsLayout;
     private LinearLayout meetingsLayout;
     private LinearLayout visitsLayout;
     private LinearLayout tasksLayout;
     private LinearLayout logoutLayout;
     private LinearLayout profileLayout;
+//    private LinearLayout statsLayout;
+    private LinearLayout leadsLayout;
 
     public MoreFragment() {
         // Required empty public constructor
@@ -76,7 +79,8 @@ public class MoreFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_more, container, false);
 
         calendarLayout = view.findViewById(R.id.calendarLayout);
-        contactsTestLayout = view.findViewById(R.id.contactsTestLayout);
+//        contactsTestLayout = view.findViewById(R.id.contactsTestLayout);
+        locationsLayout = view.findViewById(R.id.locationsLayout);
         contactsLayout = view.findViewById(R.id.contactsLayout);
         callsLayout = view.findViewById(R.id.callsLayout);
         meetingsLayout = view.findViewById(R.id.meetingsLayout);
@@ -84,6 +88,8 @@ public class MoreFragment extends Fragment {
         tasksLayout = view.findViewById(R.id.tasksLayout);
         logoutLayout = view.findViewById(R.id.logoutLayout);
         profileLayout = view.findViewById(R.id.profileLayout);
+//        statsLayout = view.findViewById(R.id.statsLayout);
+        leadsLayout = view.findViewById(R.id.leadsLayout);
 
 
         calendarLayout.setOnClickListener(new View.OnClickListener() {
@@ -96,11 +102,31 @@ public class MoreFragment extends Fragment {
             }
         });
 
-        contactsTestLayout.setOnClickListener(new View.OnClickListener() {
+        locationsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getContext(), ContactsAccessActivity.class);
+                Intent intent = new Intent(getContext(), LocationsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+//        statsLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent intent = new Intent(getContext(), StatsActivity.class);
+//                startActivity(intent);
+//
+//            }
+//        });
+
+        leadsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), LeadsActivity.class);
                 startActivity(intent);
 
             }

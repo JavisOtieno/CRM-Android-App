@@ -339,6 +339,11 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
 
     }
 
+    @Override
+    public void onComplete() {
+        isTaskRunning = false;
+    }
+
     private void showAccountDialog(final View v,String[] accountOptions, String[] Ids,
                                    String title) {
         final String[] array = accountOptions;

@@ -177,9 +177,25 @@ public class CalendarActivity extends AppCompatActivity implements OnSuccessList
 
                     Map<String, String> item = items.get(position);
 
-                    Intent intent = new Intent(CalendarActivity.this, IndividualCallActivity.class);
-                    intent.putExtra("callId",item.get("id"));
-                    startActivity(intent);
+                    if(item.get("type").equals("Call")) {
+                        Intent intent = new Intent(CalendarActivity.this, IndividualCallActivity.class);
+                        intent.putExtra("callId", item.get("id"));
+                        startActivity(intent);
+                    }else if(item.get("type").equals("Visit")){
+                        Intent intent = new Intent(CalendarActivity.this, IndividualVisitActivity.class);
+                        intent.putExtra("visitId", item.get("id"));
+                        startActivity(intent);
+                    }else if(item.get("type").equals("Meeting")){
+                        Intent intent = new Intent(CalendarActivity.this, IndividualMeetingActivity.class);
+                        intent.putExtra("meetingId", item.get("id"));
+                        startActivity(intent);
+                    }else if(item.get("type").equals("Task")){
+                        Intent intent = new Intent(CalendarActivity.this, IndividualTaskActivity.class);
+                        intent.putExtra("taskId", item.get("id"));
+                        startActivity(intent);
+                    }else{
+                        Toasts.toastIconError(CalendarActivity.this,"Not found"+item.get("type"));
+                    }
 
 
 
@@ -218,5 +234,10 @@ public class CalendarActivity extends AppCompatActivity implements OnSuccessList
             Toasts.toastIconError(CalendarActivity.this,"Error Loading");
             Log.e("API Response", "JSON Parsing error: " + e.getMessage());
         }
+    }
+
+    @Override
+    public void onComplete() {
+
     }
 }

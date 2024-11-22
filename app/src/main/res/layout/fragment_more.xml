@@ -190,53 +190,7 @@ android:orientation="vertical">
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:id="@+id/visitsLayout"
-                    android:gravity="center_vertical"
-                    android:minHeight="@dimen/spacing_xxlarge"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/spacing_medium"
-                    android:paddingRight="@dimen/spacing_medium">
 
-                    <ImageButton
-                        android:layout_width="@dimen/spacing_xmlarge"
-                        android:layout_height="@dimen/spacing_xmlarge"
-                        android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_business"
-                        app:tint="@color/red_400" />
-
-                    <View
-                        android:layout_width="@dimen/spacing_small"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Visits"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:textColor="@color/grey_80" />
-
-                    <View
-                        android:layout_width="@dimen/spacing_large"
-                        android:layout_height="wrap_content" />
-
-                    <ImageButton
-                        android:layout_width="@dimen/spacing_xmlarge"
-                        android:layout_height="@dimen/spacing_xmlarge"
-                        android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_arrow_right"
-                        app:tint="@color/grey_40" />
-
-                    <View
-                        android:layout_width="@dimen/spacing_middle"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -292,6 +246,7 @@ android:orientation="vertical">
 
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -299,7 +254,7 @@ android:orientation="vertical">
                     android:clickable="true"
                     android:gravity="center_vertical"
                     android:minHeight="@dimen/spacing_xxlarge"
-                    android:id="@+id/contactsTestLayout"
+                    android:id="@+id/leadsLayout"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/spacing_medium"
                     android:paddingRight="@dimen/spacing_medium">
@@ -309,7 +264,7 @@ android:orientation="vertical">
                         android:layout_height="@dimen/spacing_xmlarge"
                         android:background="@android:color/transparent"
                         app:srcCompat="@drawable/ic_person"
-                        app:tint="@color/grey_40" />
+                        app:tint="@color/red_400" />
 
                     <View
                         android:layout_width="@dimen/spacing_small"
@@ -319,7 +274,7 @@ android:orientation="vertical">
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Select Contacts"
+                        android:text="Leads"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:textColor="@color/grey_80" />
 
@@ -339,6 +294,154 @@ android:orientation="vertical">
                         android:layout_height="wrap_content" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:id="@+id/visitsLayout"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/spacing_xxlarge"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/spacing_medium"
+                    android:paddingRight="@dimen/spacing_medium">
+
+                    <ImageButton
+                        android:layout_width="@dimen/spacing_xmlarge"
+                        android:layout_height="@dimen/spacing_xmlarge"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_business"
+                        app:tint="@color/indigo_300" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_small"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Visits"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/grey_80" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:layout_width="@dimen/spacing_xmlarge"
+                        android:layout_height="@dimen/spacing_xmlarge"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_arrow_right"
+                        app:tint="@color/grey_40" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_middle"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/spacing_xxlarge"
+                    android:id="@+id/locationsLayout"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/spacing_medium"
+                    android:paddingRight="@dimen/spacing_medium">
+
+                    <ImageButton
+                        android:layout_width="@dimen/spacing_xmlarge"
+                        android:layout_height="@dimen/spacing_xmlarge"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_location"
+                        app:tint="@color/brown_300" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_small"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Locations"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/grey_80" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="wrap_content" />
+
+                    <ImageButton
+                        android:layout_width="@dimen/spacing_xmlarge"
+                        android:layout_height="@dimen/spacing_xmlarge"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_arrow_right"
+                        app:tint="@color/grey_40" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_middle"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="?attr/selectableItemBackground"-->
+<!--                    android:clickable="true"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:minHeight="@dimen/spacing_xxlarge"-->
+<!--                    android:id="@+id/statsLayout"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:paddingLeft="@dimen/spacing_medium"-->
+<!--                    android:paddingRight="@dimen/spacing_medium">-->
+
+<!--                    <ImageButton-->
+<!--                        android:layout_width="@dimen/spacing_xmlarge"-->
+<!--                        android:layout_height="@dimen/spacing_xmlarge"-->
+<!--                        android:background="@android:color/transparent"-->
+<!--                        app:srcCompat="@drawable/ic_show_chart"-->
+<!--                        app:tint="@color/green_400" />-->
+
+<!--                    <View-->
+<!--                        android:layout_width="@dimen/spacing_small"-->
+<!--                        android:layout_height="wrap_content" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:text="Stats"-->
+<!--                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"-->
+<!--                        android:textColor="@color/grey_80" />-->
+
+<!--                    <View-->
+<!--                        android:layout_width="@dimen/spacing_large"-->
+<!--                        android:layout_height="wrap_content" />-->
+
+<!--                    <ImageButton-->
+<!--                        android:layout_width="@dimen/spacing_xmlarge"-->
+<!--                        android:layout_height="@dimen/spacing_xmlarge"-->
+<!--                        android:background="@android:color/transparent"-->
+<!--                        app:srcCompat="@drawable/ic_arrow_right"-->
+<!--                        app:tint="@color/grey_40" />-->
+
+<!--                    <View-->
+<!--                        android:layout_width="@dimen/spacing_middle"-->
+<!--                        android:layout_height="wrap_content" />-->
+
+<!--                </LinearLayout>-->
+
+
 
 
             </LinearLayout>

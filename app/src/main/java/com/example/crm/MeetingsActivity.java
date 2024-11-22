@@ -371,4 +371,9 @@ public class MeetingsActivity extends AppCompatActivity implements OnSuccessList
         }
 
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

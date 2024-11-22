@@ -497,4 +497,9 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
         }
 
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

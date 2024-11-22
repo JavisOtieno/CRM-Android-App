@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +46,7 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
     private TextView accountsNumberTextView;
     private TextView dealsNumberTextView;
     private ImageView profileImageView;
+    private Button viewMoreStatsButton;
 
 
     @Override
@@ -74,7 +76,17 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
         dealsNumberTextView = (TextView) findViewById(R.id.dealsNumberTextView);
         profileImageView = (ImageView) findViewById(R.id.image);
 
+        viewMoreStatsButton = (Button) findViewById(R.id.viewMoreStatsButton);
+
         mAuthToken = EncryptedPrefsUtil.getString("authToken", "");
+
+        viewMoreStatsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this,StatsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         NetworkUtils.
                 fetchDataGet("profile",
@@ -185,6 +197,11 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
             Toasts.toastIconError(ProfileActivity.this,"Error Loading");
             Log.e("API Response", "JSON Parsing error: " + e.getMessage());
         }
+
+    }
+
+    @Override
+    public void onComplete() {
 
     }
 }

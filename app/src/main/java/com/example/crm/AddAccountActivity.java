@@ -166,4 +166,9 @@ public class AddAccountActivity extends AppCompatActivity implements OnSuccessLi
 
 
     }
+
+    @Override
+    public void onComplete() {
+        isTaskRunning=false;
+    }
 }

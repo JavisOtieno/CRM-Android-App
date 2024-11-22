@@ -138,4 +138,9 @@ public class LoginActivity extends AppCompatActivity implements OnSuccessListene
         }
 
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

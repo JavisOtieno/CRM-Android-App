@@ -363,4 +363,9 @@ public class ContactsActivity extends AppCompatActivity implements OnSuccessList
         }
 
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

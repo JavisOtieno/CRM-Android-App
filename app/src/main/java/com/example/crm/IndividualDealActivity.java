@@ -120,4 +120,9 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

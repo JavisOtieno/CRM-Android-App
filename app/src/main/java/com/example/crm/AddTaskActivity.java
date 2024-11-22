@@ -349,6 +349,11 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
 
     }
 
+    @Override
+    public void onComplete() {
+        isTaskRunning = false;
+    }
+
     private void showAccountDialog(final View v,String[] accountOptions, String[] Ids,
                                    String title) {
         final String[] array = accountOptions;

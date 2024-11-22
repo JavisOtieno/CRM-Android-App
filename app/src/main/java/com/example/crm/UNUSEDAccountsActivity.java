@@ -228,4 +228,9 @@ public class UNUSEDAccountsActivity extends AppCompatActivity implements OnSucce
     public void onSuccess(ResponseBody responseBody) {
 
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

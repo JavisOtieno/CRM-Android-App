@@ -2,6 +2,7 @@ package com.example.crm;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.example.crm.utils.EncryptedPrefsUtil;
@@ -26,6 +27,7 @@ public class NetworkUtils {
 
         System.out.println("endpoint: "+endpoint);
 
+        EncryptedPrefsUtil.init(context);
         token = EncryptedPrefsUtil.getString("authToken", "");
 
 
@@ -43,6 +45,7 @@ public class NetworkUtils {
         System.out.println("Request URL: " + url);
 
 
+        String finalToken = token;
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -51,6 +54,17 @@ public class NetworkUtils {
                     listener.onSuccess(response.body());
                 } else {
                     Log.e("API Error", "Response code: " + response.code());
+                    if(response.code()==401){
+                        Toasts.toastIconError(context, finalToken +"Session Expired. Please login again");
+//                        return;
+                        EncryptedPrefsUtil.saveString("userId", "0");
+                        EncryptedPrefsUtil.saveString("authToken", "");
+                        EncryptedPrefsUtil.saveString("email", "");
+                        EncryptedPrefsUtil.saveString("password","");
+                        Intent intent = new Intent(context,LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
                     Toasts.toastIconError(context,"Error Loading. Please try again");
 
                 }
@@ -68,6 +82,7 @@ public class NetworkUtils {
     public static void fetchDataPost(String endpoint, String token, JSONObject requestBody,
                                      OnSuccessListener listener,Context context) {
 
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(R.layout.progress_dialog_layout); // Use a custom layout or a simple ProgressBar
         builder.setCancelable(false); // Prevent closing the dialog while loading
@@ -82,15 +97,29 @@ public class NetworkUtils {
         Call<ResponseBody> call = apiService.postData(endpoint, "Bearer " + token,
                 "application/json", body);
 
+        String finalToken = token;
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 dialog.dismiss();
+                listener.onComplete();
                 if (response.isSuccessful() && response.body() != null) {
                     listener.onSuccess(response.body());
                 } else {
                     Log.e("API Error", "Response code: " + response.code());
-//                    Toasts.toastIconError(context,"Error Loading. Please try again");
+                    if(response.code()==401){
+                        Toasts.toastIconError(context, finalToken +"Session Expired. Please login again");
+//                        return;
+                        EncryptedPrefsUtil.saveString("userId", "0");
+                        EncryptedPrefsUtil.saveString("authToken", "");
+                        EncryptedPrefsUtil.saveString("email", "");
+                        EncryptedPrefsUtil.saveString("password","");
+                        Intent intent = new Intent(context,LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }else{
+                        Toasts.toastIconError(context,"Error Loading. Please try again");
+                    }
 
                     try {
                         if (response.errorBody() != null) {

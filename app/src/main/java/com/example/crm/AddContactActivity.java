@@ -40,6 +40,7 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
     private String account;
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
+    private Button importButton;
 
 
     @Override
@@ -66,9 +67,20 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
                         AddContactActivity.this);
 
         submitButton = (Button)findViewById(R.id.submitButton);
+        importButton =(Button)findViewById(R.id.importFromContactsButton);
+
         nameEditText = (EditText)findViewById(R.id.nameEditText);
         phoneEditText = (EditText)findViewById(R.id.phoneEditText);
         accountEditText = (EditText)findViewById(R.id.accountEditText);
+
+        importButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddContactActivity.this,
+                        ContactsAccessActivity.class);
+                startActivity(intent);
+            }
+        });
 
         String contactName = getIntent().getStringExtra("contactName");
         if (contactName == null || contactName.isEmpty()) {
@@ -86,7 +98,8 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
             Log.d("Contact", "Contact phone is not provided.");
         } else {
             // Proceed with the non-null contactName
-            phoneEditText.setText(contactPhone);
+            String formattedPhoneNumber = contactPhone.replaceAll("[^\\d+]", "");
+            phoneEditText.setText(formattedPhoneNumber);
             Log.d("Contact", "Contact phone: " + contactPhone);
         }
 
@@ -238,6 +251,11 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public void onComplete() {
+        isTaskRunning=false;
     }
 
     private void showAccountDialog(final View v,String[] accountOptions, String[] accountIds) {

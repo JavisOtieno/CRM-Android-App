@@ -123,4 +123,9 @@ public class IndividualAccountActivity extends AppCompatActivity implements OnSu
 
 
     }
+
+    @Override
+    public void onComplete() {
+
+    }
 }

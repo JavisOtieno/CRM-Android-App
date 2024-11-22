@@ -334,6 +334,20 @@
 
         </LinearLayout>
 
+        <Button
+            android:layout_marginLeft="@dimen/spacing_smlarge"
+            android:layout_marginRight="@dimen/spacing_smlarge"
+            android:layout_marginTop="@dimen/spacing_middle"
+            android:id="@+id/viewMoreStatsButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/btn_rect_red"
+            android:text="VIEW MORE STATS"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@android:color/white" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

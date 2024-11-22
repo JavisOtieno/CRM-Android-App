@@ -13,6 +13,11 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import okhttp3.ResponseBody;
 
@@ -21,7 +26,10 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
     private ActionBar actionBar;
     private TextView accountNameTextView;
     private TextView contactNameTextView;
+    private TextView contactPhoneTextView;
     private TextView statusTextView;
+    private TextView dateTextView;
+    private TextView timeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +52,10 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
 
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
+        contactPhoneTextView = (TextView) findViewById(R.id.contactPhoneTextView);
         statusTextView = (TextView) findViewById(R.id.statusTextView);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
+        timeTextView = (TextView) findViewById(R.id.timeTextView);
 
 
         NetworkUtils.
@@ -86,9 +97,19 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
                             .getString("name"));
                     contactNameTextView.setText(call.getJSONObject("contact")
                             .getString("name"));
+                    contactPhoneTextView.setText(call.getJSONObject("contact")
+                            .getString("phone"));
                     String status = call.getString("status");
                     statusTextView.setText(status.substring(0, 1).toUpperCase() +
                             status.substring(1).toLowerCase());
+                    String dateFromDB = call.getString("date");
+//                    ZonedDateTime dateTime = Instant.parse(dateFromDB).atZone(ZoneId.of("Africa/Nairobi"));
+//                    String formatted = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    LocalDate localDate = LocalDate.parse(dateFromDB, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                    String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+
+                    dateTextView.setText(formattedDate);
+                    timeTextView.setText(call.getString("time"));
 
 
                 }
@@ -119,6 +140,11 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    @Override
+    public void onComplete() {
 
     }
 
