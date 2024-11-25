@@ -51,7 +51,7 @@ public class IndividualMeetingActivity extends AppCompatActivity
 
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
-        statusTextView = (TextView) findViewById(R.id.statusTextView);
+        statusTextView = (TextView) findViewById(R.id.descriptionTextView);
         typeTextView = (TextView) findViewById(R.id.typeTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         locationTextView = (TextView) findViewById(R.id.locationTextView);

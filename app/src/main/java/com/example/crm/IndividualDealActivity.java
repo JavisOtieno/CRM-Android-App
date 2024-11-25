@@ -10,9 +10,12 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import okhttp3.ResponseBody;
 
@@ -23,6 +26,8 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
     private TextView accountNameTextView;
     private TextView amountTextView;
     private TextView statusTextView;
+    private TextView dateTextView;
+    private TextView timeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,9 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
         dealNameTextView = (TextView) findViewById(R.id.dealNameTextView);
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         amountTextView = (TextView) findViewById(R.id.amountTextView);
-        statusTextView = (TextView) findViewById(R.id.statusTextView);
+        statusTextView = (TextView) findViewById(R.id.descriptionTextView);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
+        timeTextView = (TextView) findViewById(R.id.timeTextView);
 
         String dealId = getIntent().getStringExtra("dealId");
 
@@ -89,6 +96,13 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
                     String status = deal.getString("status");
                     statusTextView.setText(status.substring(0, 1).toUpperCase() +
                             status.substring(1).toLowerCase());
+
+                    String createdAt = deal.getString("created_at");
+                    ZonedDateTime dateTime = Instant.parse(createdAt).atZone(ZoneId.of("Africa/Nairobi"));
+                    String formattedDate = dateTime.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
+                    String formattedTime = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+                    dateTextView.setText(formattedDate);
+                    timeTextView.setText(formattedTime);
 
 
                 }

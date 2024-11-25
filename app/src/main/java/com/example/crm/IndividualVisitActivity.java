@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -22,6 +23,8 @@ implements OnSuccessListener{
     private TextView accountNameTextView;
     private TextView locationNameTextView;
     private TextView statusTextView;
+    private TextView dateTextView;
+    private TextView timeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ implements OnSuccessListener{
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         locationNameTextView = (TextView) findViewById(R.id.locationNameTextView);
         statusTextView = (TextView) findViewById(R.id.statusTextView);
+        dateTextView = (TextView) findViewById(R.id.dateTextView);
+        timeTextView = (TextView) findViewById(R.id.timeTextView);
 
         NetworkUtils.
                 fetchDataGet("visit/"+visitId,
@@ -90,8 +95,11 @@ implements OnSuccessListener{
                     locationNameTextView.setText(visit.getJSONObject("location")
                             .getString("name"));
                     String status = visit.getString("status");
+
                     statusTextView.setText(status.substring(0, 1).toUpperCase() +
                             status.substring(1).toLowerCase());
+                    dateTextView.setText(visit.getString("date"));
+                    timeTextView.setText(visit.getString("time"));
 
 
                 }

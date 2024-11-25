@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 

@@ -19,7 +19,7 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
     private Toolbar toolbar;
     private ActionBar actionBar;
     private TextView locationNameTextView;
-    private TextView latTextView;
+    private TextView descriptionTextView;
     private TextView accountNameTextView;
 
     @Override
@@ -40,7 +40,7 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
         actionBar.setTitle("Location");
 
         locationNameTextView = (TextView) findViewById(R.id.locationTextView);
-        latTextView = (TextView) findViewById(R.id.phoneTextView);
+        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
 
         String locationId = getIntent().getStringExtra("locationId");
@@ -80,7 +80,7 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
                     JSONObject location = jsonObject.getJSONObject("location");
 
                     locationNameTextView.setText(location.getString("name"));
-                    latTextView.setText(location.getString("lat"));
+                    descriptionTextView.setText(location.getString("description"));
                     accountNameTextView.setText(location.getJSONObject("account")
                             .getString("name"));
 

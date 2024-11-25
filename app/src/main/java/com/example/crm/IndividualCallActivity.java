@@ -10,13 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import okhttp3.ResponseBody;
@@ -53,7 +49,7 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
         contactPhoneTextView = (TextView) findViewById(R.id.contactPhoneTextView);
-        statusTextView = (TextView) findViewById(R.id.statusTextView);
+        statusTextView = (TextView) findViewById(R.id.descriptionTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         timeTextView = (TextView) findViewById(R.id.timeTextView);
 

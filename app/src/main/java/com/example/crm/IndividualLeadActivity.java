@@ -18,10 +18,9 @@ import okhttp3.ResponseBody;
 public class IndividualLeadActivity extends AppCompatActivity implements OnSuccessListener {
     private Toolbar toolbar;
     private ActionBar actionBar;
-    private TextView leadName;
-    private TextView accountPhone;
-
-    private TextView accountName;
+    private TextView accountNameTextView;
+    private TextView contactNameTextView;
+    private TextView contactPhoneTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +40,9 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
         actionBar.setTitle("Lead");
 
 
-        leadName = (TextView) findViewById(R.id.leadName);
-        accountPhone = (TextView) findViewById(R.id.accountPhone);
-        accountName = (TextView) findViewById(R.id.accountName);
+        accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
+        contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
+        contactPhoneTextView = (TextView) findViewById(R.id.contactPhoneTextView);
 
 
 
@@ -86,10 +85,9 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
 
                     JSONObject lead = jsonObject.getJSONObject("lead");
 
-                    leadName.setText(lead.getString("name"));
-
-                    accountPhone.setText(lead.getString("phone"));
-                    accountName.setText(lead.getString("account_name"));
+                    contactNameTextView.setText(lead.getString("name"));
+                    contactPhoneTextView.setText(lead.getString("phone"));
+                    accountNameTextView.setText(lead.getString("account_name"));
 
 
                 }
