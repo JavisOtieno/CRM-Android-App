@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
     private TextView dealsNumberTextView;
     private ImageView profileImageView;
     private Button viewMoreStatsButton;
+    private TextView leadsNumberTextView;
 
 
     @Override
@@ -74,6 +75,7 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
         accountsNumberTextView = (TextView) findViewById(R.id.accountsNumberTextView);
         contactsNumberTextView = (TextView) findViewById(R.id.contactsNumberTextView);
         dealsNumberTextView = (TextView) findViewById(R.id.dealsNumberTextView);
+        leadsNumberTextView = (TextView) findViewById(R.id.leadsNumberTextView);
         profileImageView = (ImageView) findViewById(R.id.image);
 
         viewMoreStatsButton = (Button) findViewById(R.id.viewMoreStatsButton);
@@ -118,9 +120,10 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
             List<Phonecall> items = new ArrayList<>();
 
             JSONObject user = jsonObject.getJSONObject("user");
-            String accounts = jsonObject.getString("accounts");
-            String contacts = jsonObject.getString("contacts");
-            String deals = jsonObject.getString("deals");
+            String accountsCount = jsonObject.getString("accountsCount");
+            String contactsCount = jsonObject.getString("contactsCount");
+            String leadsCount = jsonObject.getString("leadsCount");
+            String dealsCount = jsonObject.getString("dealsCount");
             String name = user.getString("name");
             nameTextView.setText(name);
             System.out.println("Image Url: "+Constants.STORAGE_URL+user.getString("image"));
@@ -154,9 +157,10 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
             emailTextView.setText(user.getString("email"));
             phoneTextView.setText(user.getString("phone"));
 
-            dealsNumberTextView.setText(deals);
-            accountsNumberTextView.setText(accounts);
-            contactsNumberTextView.setText(contacts);
+            dealsNumberTextView.setText(dealsCount);
+            accountsNumberTextView.setText(accountsCount);
+            contactsNumberTextView.setText(contactsCount);
+            leadsNumberTextView .setText(leadsCount);
 
 
 

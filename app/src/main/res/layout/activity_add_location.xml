@@ -39,6 +39,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/edit_text_round_bg_white"
                 android:hint="Name"
+
                 android:id="@+id/nameEditText"
                 android:minHeight="45dp"
                 android:paddingLeft="@dimen/spacing_middle"
@@ -65,6 +66,8 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:background="@drawable/edit_text_round_bg_white"
                 android:hint="Latitude"
+                android:visibility="gone"
+
                 android:id="@+id/latEditText"
                 android:paddingLeft="@dimen/spacing_middle"
                 android:paddingRight="@dimen/spacing_middle" />
@@ -76,6 +79,8 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:background="@drawable/edit_text_round_bg_white"
                 android:hint="Longitude"
+                android:visibility="gone"
+                android:editable="false"
                 android:id="@+id/longEditText"
                 android:paddingLeft="@dimen/spacing_middle"
                 android:paddingRight="@dimen/spacing_middle" />

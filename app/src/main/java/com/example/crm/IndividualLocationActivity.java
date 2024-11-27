@@ -1,12 +1,24 @@
 package com.example.crm;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,12 +27,17 @@ import java.io.IOException;
 
 import okhttp3.ResponseBody;
 
-public class IndividualLocationActivity extends AppCompatActivity implements OnSuccessListener{
+public class IndividualLocationActivity extends AppCompatActivity implements OnSuccessListener,
+        OnMapReadyCallback {
     private Toolbar toolbar;
     private ActionBar actionBar;
     private TextView locationNameTextView;
     private TextView descriptionTextView;
     private TextView accountNameTextView;
+    private MapView mapView;
+    private GoogleMap googleMap;
+    private String mLatitude;
+    private String mLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +56,16 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Location");
 
-        locationNameTextView = (TextView) findViewById(R.id.locationTextView);
+        locationNameTextView = (TextView) findViewById(R.id.locationNameTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
 
         String locationId = getIntent().getStringExtra("locationId");
+
+        mapView = findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+
+        mapView.getMapAsync(this);
 
         NetworkUtils.
                 fetchDataGet("location/"+locationId,
@@ -83,6 +105,21 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
                     descriptionTextView.setText(location.getString("description"));
                     accountNameTextView.setText(location.getJSONObject("account")
                             .getString("name"));
+                    mLatitude = location.getString("lat");
+                    mLongitude = location.getString("long");
+
+                    if (googleMap != null) {
+                        // Parse the result and add the marker to the map
+
+                            // Add a marker at the specified coordinates
+                            LatLng position = new LatLng(Double.parseDouble(mLatitude),
+                                    Double.parseDouble(mLongitude));
+                            googleMap.addMarker(new MarkerOptions().position(position).title("New Marker"));
+
+                            // Optionally, move the camera to the marker's location
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position, 12));
+
+                    }
 
 
                 }
@@ -117,6 +154,73 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
 
     @Override
     public void onComplete() {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
+
+        // You can customize the map here if needed
+        // For example, enable zoom controls:
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
+
+
+
+
+        Intent intent = getIntent();
+        String mName = "Test";
+
+        // Add a marker at a specific location and move the camera
+        // Example: San Francisco
+//        LatLng sanFrancisco = new LatLng(Double.parseDouble(mLatitude), Double.parseDouble(mLongitude));
+//        googleMap.addMarker(new MarkerOptions().position(sanFrancisco).title(mName));
+//        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sanFrancisco, 12)); // Zoom level 12
+
+
 
     }
 }

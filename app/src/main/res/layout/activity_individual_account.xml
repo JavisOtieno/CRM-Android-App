@@ -232,11 +232,26 @@
 
             </androidx.cardview.widget.CardView>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:layout_height="wrap_content"
+                android:text="Edit Account"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red_700"
+                android:elevation="4dp"
+                android:id="@+id/viewMoreStatsButton"/>
+
+
+            <!--                android:layout_marginTop="20dp"-->
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+
                 app:cardBackgroundColor="@android:color/white"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"

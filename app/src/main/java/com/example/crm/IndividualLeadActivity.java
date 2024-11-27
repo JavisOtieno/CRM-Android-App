@@ -1,7 +1,10 @@
 package com.example.crm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,6 +24,8 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
     private TextView accountNameTextView;
     private TextView contactNameTextView;
     private TextView contactPhoneTextView;
+    private Button editLeadButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +48,26 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
         contactPhoneTextView = (TextView) findViewById(R.id.contactPhoneTextView);
-
-
+        editLeadButton = (Button) findViewById(R.id.editLeadButton);
 
         String leadId = getIntent().getStringExtra("leadId");
+
+        editLeadButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualLeadActivity.this,
+                        EditLeadActivity.class);
+                intent.putExtra("leadId",leadId);
+                startActivity(intent);
+            }
+
+        });
+
+
+
+
+
 
         NetworkUtils.
                 fetchDataGet("lead/"+leadId,

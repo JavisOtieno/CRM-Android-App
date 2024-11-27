@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -86,6 +87,8 @@ public class CalendarActivity extends AppCompatActivity implements OnSuccessList
                     e.printStackTrace();
                 }
 
+
+
                 NetworkUtils.
                         fetchDataPost("activitiesdate",
                                 "", requestBody,CalendarActivity.this,
@@ -93,9 +96,23 @@ public class CalendarActivity extends AppCompatActivity implements OnSuccessList
             }
         });
 
+        LocalDate currentDate = LocalDate.now();
+        JSONObject requestBody = new JSONObject();
+        try {
+            requestBody.put("date", currentDate);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//
+//        NetworkUtils.
+//                fetchDataGet("activities",
+//                        mAuthToken,CalendarActivity.this,CalendarActivity.this);
+
         NetworkUtils.
-                fetchDataGet("activities",
-                        mAuthToken,CalendarActivity.this,CalendarActivity.this);
+                fetchDataPost("activitiesdate",
+                        "", requestBody,CalendarActivity.this,
+                        CalendarActivity.this);
 
     }
     @Override

@@ -261,7 +261,7 @@ public class LocationsActivity extends AppCompatActivity implements OnSuccessLis
             return true;
         }
         else if (item.getItemId() == R.id.action_add) {
-            Intent intent = new Intent(LocationsActivity.this, AddLocationActivity.class);
+            Intent intent = new Intent(LocationsActivity.this, GetLocationActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

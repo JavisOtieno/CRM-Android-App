@@ -52,5 +52,11 @@ dependencies {
     implementation("com.balysv:material-ripple:1.0.2")
     implementation("androidx.security:security-crypto:1.1.0-alpha03") // or the latest stable version
     implementation("com.squareup.picasso:picasso:2.8")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+//    implementation("com.google.android.libraries.places:places:2.8.0")
+    implementation("com.google.android.libraries.places:places:3.2.0")
+
+
+
 //    implementation("com.google.firebase:firebase-crashlytics")
 }

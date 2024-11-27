@@ -99,6 +99,9 @@ public class MoreFragment extends Fragment {
                 Intent intent = new Intent(getContext(), CalendarActivity.class);
                 startActivity(intent);
 
+//                Intent intent = new Intent(getContext(), GetLocationActivity.class);
+//                startActivity(intent);
+
             }
         });
 

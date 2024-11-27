@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    tools:context=".GetLocationActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/toolbar"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Toolbar for navigation -->
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="?android:attr/actionBarItemBackground"-->
+<!--        android:title="Map"-->
+<!--        android:titleTextColor="#ffffff" />-->
+
+    <!-- SearchView for searching locations -->
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:id="@+id/searchView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/toolbar"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:queryHint="Search location"-->
+<!--        android:iconifiedByDefault="false" />-->
+
+    <fragment
+        android:id="@+id/place_autocomplete_fragment"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/appBarLayout"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"/>
+
+    <!-- MapView to show the map -->
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_below="@id/place_autocomplete_fragment"
+        android:layout_marginTop="16dp" />
+
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_below="@+id/mapView"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Submit Location"
+        android:id="@+id/submitButton"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/red_700"
+        android:elevation="4dp"
+        />
+
+    <!-- Places Autocomplete Fragment -->
+
+
+
+
+</LinearLayout>

@@ -1,7 +1,10 @@
 package com.example.crm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -28,6 +31,7 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
     private TextView statusTextView;
     private TextView dateTextView;
     private TextView timeTextView;
+    private Button editDealButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +56,23 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
         statusTextView = (TextView) findViewById(R.id.descriptionTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         timeTextView = (TextView) findViewById(R.id.timeTextView);
+        editDealButton = (Button) findViewById(R.id.editDealButton);
 
         String dealId = getIntent().getStringExtra("dealId");
+
+        editDealButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(IndividualDealActivity.this,
+                        EditDealActivity.class);
+                intent.putExtra("dealId",dealId);
+                startActivity(intent);
+            }
+
+        });
+
+
 
         NetworkUtils.
                 fetchDataGet("deal/"+dealId,

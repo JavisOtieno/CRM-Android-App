@@ -59,6 +59,38 @@
 
             <!--            </RelativeLayout>-->
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@color/red_50"
+                android:layout_height="400dp">
+
+
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/mapView"
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                     />
+                <!--                            android:scaleType="centerCrop"-->
+
+                <!--                            <View-->
+                <!--                                android:layout_width="match_parent"-->
+                <!--                                android:layout_height="100dp"-->
+                <!--                                android:background="@drawable/bg_gradient"-->
+                <!--                                android:rotation="180" />-->
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:layout_marginTop="@dimen/spacing_mxlarge"
+                    android:fitsSystemWindows="false"
+                    app:contentInsetStartWithNavigation="0dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/Toolbar.Light" />
+
+            </RelativeLayout>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

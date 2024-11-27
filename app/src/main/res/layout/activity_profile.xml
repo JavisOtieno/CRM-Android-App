@@ -55,7 +55,8 @@
                 android:layout_height="100dp"
                 android:background="@color/white"
                 android:padding="@dimen/spacing_xsmall"
-                android:src="@drawable/photo_male_2" />
+                 />
+<!--            android:src="@drawable/person_edited"-->
 
             <View
                 android:layout_width="0dp"
@@ -325,28 +326,75 @@
                 android:layout_width="@dimen/spacing_middle"
                 android:layout_height="0dp" />
 
-            <View
+<!--            <View-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="@dimen/spacing_xsmall"-->
+<!--                android:layout_marginRight="@dimen/spacing_xsmall"-->
+<!--                android:layout_weight="1" />-->
+            <androidx.cardview.widget.CardView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xsmall"
                 android:layout_marginLeft="@dimen/spacing_xsmall"
                 android:layout_marginRight="@dimen/spacing_xsmall"
-                android:layout_weight="1" />
+                android:layout_marginTop="@dimen/spacing_xsmall"
+                android:layout_weight="1"
+                android:visibility="visible"
+                app:cardCornerRadius="2dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <ImageView
+                        android:layout_width="@dimen/spacing_mxlarge"
+                        android:layout_height="@dimen/spacing_mxlarge"
+                        app:srcCompat="@drawable/ic_person"
+                        app:tint="@color/light_blue_700" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:id="@+id/leadsNumberTextView"
+                        android:layout_marginTop="@dimen/spacing_middle"
+                        android:text="0"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/light_blue_700" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_middle"
+                        android:text="Leads"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                        android:textColor="@color/grey_60" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
-        <Button
-            android:layout_marginLeft="@dimen/spacing_smlarge"
-            android:layout_marginRight="@dimen/spacing_smlarge"
-            android:layout_marginTop="@dimen/spacing_middle"
-            android:id="@+id/viewMoreStatsButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@drawable/btn_rect_red"
-            android:text="VIEW MORE STATS"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@android:color/white" />
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="@dimen/spacing_middle"
+                        android:layout_height="wrap_content"
+                        android:text="View More Stats"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/red_700"
+                        android:elevation="4dp"
+                        android:id="@+id/viewMoreStatsButton"/>
+
+
 
     </LinearLayout>
 

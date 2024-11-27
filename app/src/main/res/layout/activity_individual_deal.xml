@@ -281,7 +281,22 @@
 
 
 
+
+
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+
+                android:layout_height="wrap_content"
+                android:text="Edit Deal"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red_700"
+                android:elevation="4dp"
+                android:id="@+id/editDealButton"/>
 
             <!--            <androidx.cardview.widget.CardView-->
             <!--                android:layout_width="match_parent"-->

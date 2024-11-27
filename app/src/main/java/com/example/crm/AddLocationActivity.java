@@ -65,6 +65,8 @@ public class AddLocationActivity extends AppCompatActivity implements OnSuccessL
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Location");
 
+
+
         NetworkUtils.
                 fetchDataGet("accounts",
                         "",AddLocationActivity.this,
@@ -77,6 +79,12 @@ public class AddLocationActivity extends AppCompatActivity implements OnSuccessL
         longEditText = (EditText)findViewById(R.id.longEditText);
         descriptionEditText = (EditText)findViewById(R.id.descriptionEditText);
         accountEditText = (EditText)findViewById(R.id.accountEditText);
+
+        String latitude = getIntent().getStringExtra("latitude");
+        String longitude = getIntent().getStringExtra("longitude");
+
+        latEditText.setText(latitude);
+        longEditText.setText(longitude);
 
 
 
