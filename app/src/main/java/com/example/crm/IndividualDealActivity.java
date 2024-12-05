@@ -113,8 +113,9 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
                             .getString("name"));
                     amountTextView.setText(deal.getString("amount"));
                     String status = deal.getString("status");
-                    statusTextView.setText(status.substring(0, 1).toUpperCase() +
-                            status.substring(1).toLowerCase());
+                    status = status.substring(0, 1).toUpperCase() +
+                            status.substring(1).toLowerCase();
+                    statusTextView.setText(status);
 
                     String createdAt = deal.getString("created_at");
                     ZonedDateTime dateTime = Instant.parse(createdAt).atZone(ZoneId.of("Africa/Nairobi"));

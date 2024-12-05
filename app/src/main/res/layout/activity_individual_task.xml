@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TasksActivity">
+    tools:context=".IndividualTaskActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/red_50"
         android:clipToPadding="false"
         android:scrollbars="none"
         android:scrollingCache="true"
@@ -281,6 +281,18 @@
 
 
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_height="wrap_content"
+                android:text="Edit Task"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red_700"
+                android:elevation="4dp"
+                android:id="@+id/editTaskButton"/>
 
 <!--            <androidx.cardview.widget.CardView-->
 <!--                android:layout_width="match_parent"-->

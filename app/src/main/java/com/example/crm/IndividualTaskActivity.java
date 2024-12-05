@@ -1,7 +1,10 @@
 package com.example.crm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -25,6 +28,7 @@ implements OnSuccessListener{
     private TextView descriptionTextView;
     private TextView dateTextView;
     private TextView timeTextView;
+    private Button editTaskButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +55,14 @@ implements OnSuccessListener{
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         timeTextView = (TextView) findViewById(R.id.timeTextView);
+        editTaskButton = (Button) findViewById(R.id.editTaskButton);
 
         NetworkUtils.
                 fetchDataGet("task/"+taskId,
                         "", IndividualTaskActivity.this,
                         IndividualTaskActivity.this);
+
+
     }
 
     @Override
@@ -98,6 +105,15 @@ implements OnSuccessListener{
                     descriptionTextView.setText(task.getString("description"));
                     dateTextView.setText(task.getString("date"));
                     timeTextView.setText(task.getString("time"));
+
+                    editTaskButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(IndividualTaskActivity.this, EditTaskActivity.class);
+                            intent.putExtra("task", task.toString());
+                            startActivity(intent);
+                        }
+                    });
 
 
                 }

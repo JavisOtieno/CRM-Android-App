@@ -76,7 +76,7 @@ public class AddLeadActivity extends AppCompatActivity implements OnSuccessListe
                         requestBody.put("name", leadName);
                         requestBody.put("account_name", accountName);
                         requestBody.put("phone",phone);
-                        Toasts.toastIconError(AddLeadActivity.this, accountName);
+//                        Toasts.toastIconError(AddLeadActivity.this, accountName);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

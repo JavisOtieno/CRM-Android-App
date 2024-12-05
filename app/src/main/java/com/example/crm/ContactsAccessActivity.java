@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -63,6 +64,23 @@ public class ContactsAccessActivity extends AppCompatActivity {
             // Permission granted, load contacts
 //            loadContacts();
             new LoadContactsTask().execute();
+        }
+    }
+
+    // Handle the result of the permission request
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_READ_CONTACTS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, load contacts
+                new LoadContactsTask().execute();
+            } else {
+                // Permission denied, show a message
+                Toasts.toastIconError(ContactsAccessActivity.this,
+                        "Permission not granted. Load Contacts Failed.");
+            }
         }
     }
 

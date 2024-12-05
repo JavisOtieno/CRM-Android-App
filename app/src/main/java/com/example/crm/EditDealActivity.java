@@ -221,8 +221,7 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
                     JSONObject deal = jsonObject.getJSONObject("deal");
                     nameEditText.setText(deal.getString("name"));
                     amountEditText.setText(deal.getString("amount"));
-                    checkedAccount=deal.getJSONObject("account").getInt("id");
-                    selectedAccountId = checkedAccount.toString();
+                    selectedAccountId=deal.getJSONObject("account").getString("id");
                     accountEditText.setText(deal.getJSONObject("account").getString("name"));
                     String statusFromDb=deal.getString("status");
 //                    if(statusFromDb.equals("pending"))
@@ -238,18 +237,12 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
 //                    System.out.println("Accounts length: "+accounts.length());
                     for (int i = 0; i < accounts.length(); i++) {
                         accountNames.add(accounts.getJSONObject(i).getString("name"));
-                        accountIds.add(accounts.getJSONObject(i).getString("id"));
-//                        Account obj = new Account();
-//                        //obj.image = drw_arr.getResourceId(i, -1);
-//                        obj.name = accounts.getJSONObject(i).getString("name");
-//                        obj.address = accounts.getJSONObject(i).getString("address");
-//                        obj.phone = accounts.getJSONObject(i).getString("phone");
-//                        obj.website = accounts.getJSONObject(i).getString("website");
-//
-//
-//                        //obj.imageDrw = drw_arr.getDrawable(obj.image);
-//                        items.add(obj);
+                        String accountId = accounts.getJSONObject(i).getString("id");
+                        accountIds.add(accountId);
 
+                        if (accountId.equals(selectedAccountId)){
+                            checkedAccount = i;
+                        }
 
                     }
 

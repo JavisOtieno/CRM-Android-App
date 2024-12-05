@@ -79,6 +79,7 @@
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/red_50"
         android:scrollbars="none"
         android:scrollingCache="true">
 
@@ -344,6 +345,18 @@
 
 
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_height="wrap_content"
+                android:text="Edit Call"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/red_700"
+                android:elevation="4dp"
+                android:id="@+id/editCallButton"/>
 
 <!--            <androidx.cardview.widget.CardView-->
 <!--                android:layout_width="match_parent"-->

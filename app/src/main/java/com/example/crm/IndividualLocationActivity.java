@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +40,7 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
     private GoogleMap googleMap;
     private String mLatitude;
     private String mLongitude;
+    private Button editLocationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
         locationNameTextView = (TextView) findViewById(R.id.locationNameTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
+        editLocationButton = (Button) findViewById(R.id.editLocationButton);
 
         String locationId = getIntent().getStringExtra("locationId");
 
@@ -108,6 +112,16 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
                     mLatitude = location.getString("lat");
                     mLongitude = location.getString("long");
 
+                    editLocationButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(IndividualLocationActivity.this,
+                                    EditLocationActivity.class);
+                            intent.putExtra("location", location.toString());
+                            startActivity(intent);
+                        }
+                    });
+
                     if (googleMap != null) {
                         // Parse the result and add the marker to the map
 
@@ -141,6 +155,8 @@ public class IndividualLocationActivity extends AppCompatActivity implements OnS
 //                FirebaseCrashlytics.getInstance().recordException(new Exception("Add Account Error: "+result));
 
             }
+
+
 
 //            Log.d("API Success", "Data: " + jsonObject.toString());
 

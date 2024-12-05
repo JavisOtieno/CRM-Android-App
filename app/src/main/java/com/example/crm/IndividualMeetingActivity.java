@@ -1,7 +1,9 @@
 package com.example.crm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -29,6 +31,7 @@ public class IndividualMeetingActivity extends AppCompatActivity
     private TextView timeTextView;
     private TextView locationTextView;
     private TextView descriptionTextView;
+    private Button editMeetingButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +54,14 @@ public class IndividualMeetingActivity extends AppCompatActivity
 
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
-        statusTextView = (TextView) findViewById(R.id.descriptionTextView);
+        statusTextView = (TextView) findViewById(R.id.statusTextView);
         typeTextView = (TextView) findViewById(R.id.typeTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         locationTextView = (TextView) findViewById(R.id.locationTextView);
         timeTextView = (TextView) findViewById(R.id.timeTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+        editMeetingButton = (Button) findViewById(R.id.editMeetingButton);
+
 
 
         NetworkUtils.
@@ -115,6 +120,13 @@ public class IndividualMeetingActivity extends AppCompatActivity
                     LocalDate localDate = LocalDate.parse(dateFromDB, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     String formattedDate = localDate.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
                     dateTextView.setText(formattedDate);
+
+                    editMeetingButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(IndividualMeetingActivity.this,
+                                EditMeetingActivity.class);
+                        intent.putExtra("meeting", meeting.toString());
+                        startActivity(intent);
+                    });
 
 
                 }

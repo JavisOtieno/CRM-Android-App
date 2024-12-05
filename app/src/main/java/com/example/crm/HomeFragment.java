@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
 //            Toast.makeText(getContext(),calendarId+"",Toast.LENGTH_SHORT).show();
 //            insert();
 //            addCalendar("TestCalendar");
-            addEventToCalendar("Meeting", "Discuss project updates", getStartTime(), getEndTime());
+//            addEventToCalendar("Meeting", "Discuss project updates", getStartTime(), getEndTime());
         }
         // Get the calendar ID
 
@@ -248,7 +248,7 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
 
     private void addEventToCalendar(String title, String description, long startTime, long endTime) {
         if (calendarId == -1) {
-            Toast.makeText(getContext(), "Calendar not found", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "Calendar not found", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -325,6 +325,7 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
             }
         }
     }
+
 //    private void addCalendar(String calendarName) {
 //        // Check for permissions
 //        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {

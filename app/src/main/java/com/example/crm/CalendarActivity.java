@@ -157,10 +157,10 @@ public class CalendarActivity extends AppCompatActivity implements OnSuccessList
                         getString("name"));
                 obj.put("accountName", activities.getJSONObject(i).getJSONObject("account")
                         .getString("name"));
-                String status = activities.getJSONObject(i).getString("type");
+                String type = activities.getJSONObject(i).getString("modelcalendartype");
                 obj.put("type",
-                        status.substring(0, 1).toUpperCase() +
-                                status.substring(1).toLowerCase());
+                        type.substring(0, 1).toUpperCase() +
+                                type.substring(1).toLowerCase());
 
 
                 String createdAt = activities.getJSONObject(i).getString("created_at");

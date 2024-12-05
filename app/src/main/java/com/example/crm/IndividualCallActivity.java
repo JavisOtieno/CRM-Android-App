@@ -1,7 +1,10 @@
 package com.example.crm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -26,6 +29,7 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
     private TextView statusTextView;
     private TextView dateTextView;
     private TextView timeTextView;
+    private Button editCallButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,9 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
         statusTextView = (TextView) findViewById(R.id.descriptionTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         timeTextView = (TextView) findViewById(R.id.timeTextView);
+        editCallButton = (Button) findViewById(R.id.editCallButton);
+
+
 
 
         NetworkUtils.
@@ -99,6 +106,16 @@ public class IndividualCallActivity extends AppCompatActivity implements OnSucce
                     statusTextView.setText(status.substring(0, 1).toUpperCase() +
                             status.substring(1).toLowerCase());
                     String dateFromDB = call.getString("date");
+
+                    editCallButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(IndividualCallActivity.this, EditCallActivity.class);
+                            intent.putExtra("call", call.toString());
+                            startActivity(intent);
+                        }
+                    });
+
 //                    ZonedDateTime dateTime = Instant.parse(dateFromDB).atZone(ZoneId.of("Africa/Nairobi"));
 //                    String formatted = dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                     LocalDate localDate = LocalDate.parse(dateFromDB, DateTimeFormatter.ofPattern("yyyy-MM-dd"));

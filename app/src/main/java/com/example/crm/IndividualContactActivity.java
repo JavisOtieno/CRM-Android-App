@@ -1,7 +1,9 @@
 package com.example.crm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,6 +23,7 @@ public class IndividualContactActivity extends AppCompatActivity implements OnSu
     private TextView contactNameTextView;
     private TextView phoneTextView;
     private TextView accountNameTextView;
+    private Button editContactButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class IndividualContactActivity extends AppCompatActivity implements OnSu
         contactNameTextView = (TextView) findViewById(R.id.contactTextView);
         phoneTextView = (TextView) findViewById(R.id.phoneTextView);
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
+        editContactButton = (Button) findViewById(R.id.editContactButton);
 
         String contactId = getIntent().getStringExtra("contactId");
 
@@ -83,6 +87,13 @@ public class IndividualContactActivity extends AppCompatActivity implements OnSu
                     phoneTextView.setText(contact.getString("phone"));
                     accountNameTextView.setText(contact.getJSONObject("account")
                             .getString("name"));
+
+                    editContactButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(IndividualContactActivity.this,
+                                EditContactActivity.class);
+                        intent.putExtra("contact", contact.toString());
+                        startActivity(intent);
+                    });
 
 
                 }

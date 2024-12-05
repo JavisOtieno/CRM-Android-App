@@ -77,7 +77,11 @@ public class AdapterListMeetings extends RecyclerView.Adapter<RecyclerView.ViewH
             Meeting p = items.get(position);
             view.name.setText(p.accountName);
             view.date.setText(p.date);
-            view.address.setText(p.status);
+
+            String status = p.status.substring(0, 1).toUpperCase() +
+                    p.status.substring(1).toLowerCase();
+            view.address.setText(status);
+
             view.website.setText(p.contactName);
 //            view.date.setText(p.phone);
 

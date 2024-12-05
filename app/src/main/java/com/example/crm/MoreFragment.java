@@ -40,6 +40,7 @@ public class MoreFragment extends Fragment {
     private LinearLayout profileLayout;
 //    private LinearLayout statsLayout;
     private LinearLayout leadsLayout;
+    private LinearLayout productsLayout;
 
     public MoreFragment() {
         // Required empty public constructor
@@ -90,6 +91,7 @@ public class MoreFragment extends Fragment {
         profileLayout = view.findViewById(R.id.profileLayout);
 //        statsLayout = view.findViewById(R.id.statsLayout);
         leadsLayout = view.findViewById(R.id.leadsLayout);
+        productsLayout = view.findViewById(R.id.productsLayout);
 
 
         calendarLayout.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +132,16 @@ public class MoreFragment extends Fragment {
             public void onClick(View view) {
 
                 Intent intent = new Intent(getContext(), LeadsActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        productsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getContext(), ProductsActivity.class);
                 startActivity(intent);
 
             }

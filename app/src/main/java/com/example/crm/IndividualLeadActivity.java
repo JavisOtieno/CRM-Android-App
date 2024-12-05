@@ -25,6 +25,7 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
     private TextView contactNameTextView;
     private TextView contactPhoneTextView;
     private Button editLeadButton;
+    private Button convertLeadButton;
 
 
     @Override
@@ -49,6 +50,7 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
         contactNameTextView = (TextView) findViewById(R.id.contactNameTextView);
         contactPhoneTextView = (TextView) findViewById(R.id.contactPhoneTextView);
         editLeadButton = (Button) findViewById(R.id.editLeadButton);
+        convertLeadButton = (Button) findViewById(R.id.convertLeadButton);
 
         String leadId = getIntent().getStringExtra("leadId");
 
@@ -63,6 +65,8 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
             }
 
         });
+
+
 
 
 
@@ -109,6 +113,16 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
                     contactNameTextView.setText(lead.getString("name"));
                     contactPhoneTextView.setText(lead.getString("phone"));
                     accountNameTextView.setText(lead.getString("account_name"));
+
+                    convertLeadButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(IndividualLeadActivity.this,
+                                    ConvertLeadActivity.class);
+                            intent.putExtra("lead",lead.toString());
+                            startActivity(intent);
+                        }
+                    });
 
 
                 }

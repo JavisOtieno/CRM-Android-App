@@ -157,7 +157,7 @@ public class EditLeadActivity extends AppCompatActivity implements OnSuccessList
                 }
                 else{
 
-                    Toasts.toastIconError(EditLeadActivity.this,"Error Adding Deal. Please Try Again");
+                    Toasts.toastIconError(EditLeadActivity.this,"Error Editing Lead. Please Try Again");
 //                    FirebaseCrashlytics.getInstance().recordException(new Exception("Add Deal Error: "+result));
 
                 }

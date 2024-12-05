@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.crm.models.Account;
+import com.example.crm.models.Phonecall;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +25,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
@@ -51,6 +53,9 @@ public class AddCallActivity extends AppCompatActivity implements OnSuccessListe
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
     private Integer checkedContact=-1;
+    private String[] statusArray= new String[]{
+            "Pending", "Complete", "Cancelled"
+    };
 
 
     @Override
@@ -70,6 +75,11 @@ public class AddCallActivity extends AppCompatActivity implements OnSuccessListe
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Call");
+
+
+
+
+
 
         NetworkUtils.
                 fetchDataGet("accountscontacts",
@@ -149,6 +159,10 @@ public class AddCallActivity extends AppCompatActivity implements OnSuccessListe
             datePickerDialog.show();
         });
 
+
+
+
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -207,18 +221,16 @@ public class AddCallActivity extends AppCompatActivity implements OnSuccessListe
         return super.onOptionsItemSelected(item);
     }
     private void showStatusDialog(final View v) {
-        final String[] array = new String[]{
-                "Pending", "Complete", "Cancelled"
-        };
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Status");
 
 
-        builder.setSingleChoiceItems(array, checkedStatus, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(statusArray, checkedStatus, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ((EditText) v).setText(array[i]);
+                ((EditText) v).setText(statusArray[i]);
                 dialogInterface.dismiss();
                 checkedStatus = i;
             }

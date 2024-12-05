@@ -20,7 +20,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/red_50"
         android:clipToPadding="false"
         android:scrollbars="none"
         android:scrollingCache="true"
@@ -236,14 +236,13 @@
                 android:layout_width="match_parent"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
-                android:layout_marginTop="@dimen/spacing_middle"
                 android:layout_height="wrap_content"
                 android:text="Edit Account"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/red_700"
                 android:elevation="4dp"
-                android:id="@+id/viewMoreStatsButton"/>
+                android:id="@+id/editAccountButton"/>
 
 
             <!--                android:layout_marginTop="20dp"-->
@@ -260,6 +259,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/red_50"
                     android:orientation="vertical">
 
 <!--                    <LinearLayout-->
@@ -503,13 +503,26 @@
 
                     </com.google.android.material.tabs.TabLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                    <FrameLayout
+                        android:id="@+id/content_frame"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="@dimen/spacing_large"
-                        android:scrollbars="vertical"
-                        android:scrollingCache="true" />
+                        android:layout_height="match_parent" />
+
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:id="@+id/recyclerView"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:padding="@dimen/spacing_large"-->
+<!--                        android:scrollbars="vertical"-->
+<!--                        android:scrollingCache="true" />-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/empty_view"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:gravity="center"-->
+<!--                        android:visibility="gone"-->
+<!--                        android:text="No contacts added" />-->
 
                 </LinearLayout>
 

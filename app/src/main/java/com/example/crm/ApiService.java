@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService {
@@ -24,6 +25,14 @@ public interface ApiService {
     @Headers("Accept: application/json")
     @POST("{endpoint}")
     Call<ResponseBody> postData(
+            @Path(value = "endpoint", encoded = true) String endpoint,
+            @Header("Authorization") String authHeader,
+            @Header("Content-Type") String contentType,
+//            @Header("Accept") String acceptHeader,
+            @Body RequestBody body);
+    @Headers("Accept: application/json")
+    @PUT("{endpoint}")
+    Call<ResponseBody> putData(
             @Path(value = "endpoint", encoded = true) String endpoint,
             @Header("Authorization") String authHeader,
             @Header("Content-Type") String contentType,

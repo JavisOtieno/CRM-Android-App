@@ -1,7 +1,9 @@
 package com.example.crm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -25,6 +27,7 @@ implements OnSuccessListener{
     private TextView statusTextView;
     private TextView dateTextView;
     private TextView timeTextView;
+    private Button editVisitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ implements OnSuccessListener{
         statusTextView = (TextView) findViewById(R.id.statusTextView);
         dateTextView = (TextView) findViewById(R.id.dateTextView);
         timeTextView = (TextView) findViewById(R.id.timeTextView);
+        editVisitButton = (Button) findViewById(R.id.editVisitButton);
 
         NetworkUtils.
                 fetchDataGet("visit/"+visitId,
@@ -96,10 +100,18 @@ implements OnSuccessListener{
                             .getString("name"));
                     String status = visit.getString("status");
 
-                    statusTextView.setText(status.substring(0, 1).toUpperCase() +
-                            status.substring(1).toLowerCase());
+                    status = status.substring(0, 1).toUpperCase() +
+                            status.substring(1).toLowerCase();
+                    statusTextView.setText(status);
                     dateTextView.setText(visit.getString("date"));
                     timeTextView.setText(visit.getString("time"));
+
+                    editVisitButton.setOnClickListener(v -> {
+                        Intent intent = new Intent(IndividualVisitActivity.this,
+                                EditVisitActivity.class);
+                        intent.putExtra("visit", visit.toString());
+                        startActivity(intent);
+                    });
 
 
                 }
