@@ -30,16 +30,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+<!--            <EditText-->
+<!--                style="@style/EditText.Flat.Grey"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="45dp"-->
+<!--                android:background="@drawable/edit_text_round_bg_white"-->
+<!--                android:hint="Name"-->
+<!--                android:id="@+id/nameEditText"-->
+<!--                android:minHeight="45dp"-->
+<!--                android:paddingLeft="@dimen/spacing_middle"-->
+<!--                android:paddingRight="@dimen/spacing_middle" />-->
+
             <EditText
+                android:id="@+id/productEditText"
                 style="@style/EditText.Flat.Grey"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:layout_marginTop="@dimen/spacing_large"
                 android:background="@drawable/edit_text_round_bg_white"
-                android:hint="Name"
-                android:id="@+id/nameEditText"
-                android:minHeight="45dp"
-                android:paddingLeft="@dimen/spacing_middle"
-                android:paddingRight="@dimen/spacing_middle" />
+                android:drawableEnd="@drawable/ic_expand_arrow"
+                android:drawableRight="@drawable/ic_expand_arrow"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="Product"
+                android:paddingLeft="@dimen/spacing_middle" />
 
             <EditText
                 style="@style/EditText.Flat.Grey"

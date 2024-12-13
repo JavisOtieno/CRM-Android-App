@@ -1,7 +1,6 @@
 package com.example.crm;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -26,7 +25,7 @@ import java.util.List;
 
 
 public class ContactsAccessActivity extends AppCompatActivity {
-    private List<Contact> contactsList = new ArrayList<>();
+    private List<PhoneContact> contactsList = new ArrayList<>();
     private static final int REQUEST_CODE_READ_CONTACTS = 1;
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -60,7 +59,7 @@ public class ContactsAccessActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CODE_READ_CONTACTS);
         } else {
-            contactsList.add(new Contact("Test", "0722334455"));
+            contactsList.add(new PhoneContact("Test", "0722334455"));
             // Permission granted, load contacts
 //            loadContacts();
             new LoadContactsTask().execute();
@@ -104,7 +103,7 @@ public class ContactsAccessActivity extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
 //    }
 
-    private class LoadContactsTask extends AsyncTask<Void, Void, List<Contact>> {
+    private class LoadContactsTask extends AsyncTask<Void, Void, List<PhoneContact>> {
         private AlertDialog dialog;
 
         protected void onPreExecute() {
@@ -118,8 +117,8 @@ public class ContactsAccessActivity extends AppCompatActivity {
 
         }
         @Override
-        protected List<Contact> doInBackground(Void... voids) {
-            List<Contact> contacts = new ArrayList<>();
+        protected List<PhoneContact> doInBackground(Void... voids) {
+            List<PhoneContact> contacts = new ArrayList<>();
             // Load contacts in the background
             Cursor cursor = getContentResolver().query(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -129,7 +128,7 @@ public class ContactsAccessActivity extends AppCompatActivity {
                 while (cursor.moveToNext()) {
                     String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                     String phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                    contacts.add(new Contact(name, phoneNumber));
+                    contacts.add(new PhoneContact(name, phoneNumber));
                 }
                 cursor.close();
             }
@@ -137,7 +136,7 @@ public class ContactsAccessActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(List<Contact> contacts) {
+        protected void onPostExecute(List<PhoneContact> contacts) {
             dialog.dismiss();
             // Update UI with the loaded contacts
             ContactsAdapter adapter = new ContactsAdapter(contacts);
@@ -145,7 +144,7 @@ public class ContactsAccessActivity extends AppCompatActivity {
 
             adapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(View view, Contact obj, int position) {
+                public void onItemClick(View view, PhoneContact obj, int position) {
                     Toasts.toastIconError(ContactsAccessActivity.this,
                             obj.getName()+" "+obj.getPhoneNumber());
 

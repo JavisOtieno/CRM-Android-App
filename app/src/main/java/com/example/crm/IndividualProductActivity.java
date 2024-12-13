@@ -41,6 +41,7 @@ public class IndividualProductActivity extends AppCompatActivity implements OnSu
     private TextView productNameTextView;
     private TextView descriptionTextView;
     private TextView accountNameTextView;
+    private TextView amountSoldTextView;
     private MapView mapView;
     private ImageView productImageView;
     private GoogleMap googleMap;
@@ -68,6 +69,7 @@ public class IndividualProductActivity extends AppCompatActivity implements OnSu
         productNameTextView = (TextView) findViewById(R.id.productNameTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         accountNameTextView = (TextView) findViewById(R.id.targetAmountTextView);
+        amountSoldTextView = (TextView) findViewById(R.id.amountSoldTextView);
 
         String productId = getIntent().getStringExtra("productId");
 
@@ -115,18 +117,12 @@ public class IndividualProductActivity extends AppCompatActivity implements OnSu
                     String targetAmount = product.getString("target_amount");
                     String targetType = product.getString("target_type");
 
+                    amountSoldTextView.setText(formatAmount(targetType,
+                            product.getString("deals_sum_amount")));
 
-                    double amount = Double.parseDouble(targetAmount);
-                    String formattedAmount = NumberFormat.getNumberInstance(Locale.US).format(amount);
 
-                    // Add prefix or suffix based on targetType
-                    if ("value".equalsIgnoreCase(targetType)) {
-                        formattedAmount = "KSh. " + formattedAmount;
-                    } else if ("quantity".equalsIgnoreCase(targetType)) {
-                        formattedAmount = formattedAmount + " units";
-                    }
-
-                    accountNameTextView.setText(formattedAmount);
+                    accountNameTextView.setText(formatAmount(targetType,
+                            targetAmount));
 
                     Picasso.get()
                             .load(Constants.STORAGE_URL+product.getString("image"))
@@ -147,9 +143,6 @@ public class IndividualProductActivity extends AppCompatActivity implements OnSu
                             });
 
                     System.out.println("Image Url: "+Constants.STORAGE_URL+product.getString("image"));
-
-
-
 
                 }
                 else if(result.contains("errors")){
@@ -185,5 +178,19 @@ public class IndividualProductActivity extends AppCompatActivity implements OnSu
     public void onComplete() {
 
     }
+    public String formatAmount(String targetType, String formatAmount) {
+
+        double amount = Double.parseDouble(formatAmount);
+        String formattedAmount = NumberFormat.getNumberInstance(Locale.US).format(amount);
+
+        // Add prefix or suffix based on targetType
+        if ("value".equalsIgnoreCase(targetType)) {
+            formattedAmount = "KSh. " + formattedAmount;
+        } else if ("quantity".equalsIgnoreCase(targetType)) {
+            formattedAmount = formattedAmount + " units";
+        }
+        return formattedAmount;
+    }
+
 
 }

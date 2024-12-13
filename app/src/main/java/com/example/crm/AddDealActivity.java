@@ -30,18 +30,25 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
     private Toolbar toolbar;
     private ActionBar actionBar;
     private Button submitButton;
-    private EditText nameEditText;
+//    private EditText nameEditText;
+    private EditText productEditText;
     private EditText amountEditText;
     private EditText accountEditText;
     private EditText statusEditText;
     private Boolean isTaskRunning = false;
     private String name;
+
     private String account;
     private String status;
     private String amount;
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
+
     private String selectedAccountId="0";
+    private String selectedProductId = "0";
+    private Integer checkedProduct=-1;
+    private String product;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +68,13 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
         actionBar.setTitle("Add Deal");
 
         NetworkUtils.
-                fetchDataGet("accounts",
+                fetchDataGet("accountsproducts",
                         "",AddDealActivity.this,
                         AddDealActivity.this);
 
         submitButton = (Button)findViewById(R.id.submitButton);
-        nameEditText = (EditText)findViewById(R.id.nameEditText);
+//        nameEditText = (EditText)findViewById(R.id.nameEditText);
+        productEditText = (EditText)findViewById(R.id.productEditText);
         amountEditText = (EditText)findViewById(R.id.amountEditText);
         accountEditText = (EditText)findViewById(R.id.accountEditText);
         statusEditText = (EditText)findViewById(R.id.statusEditText);
@@ -88,14 +96,16 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
                 if (!isTaskRunning) {
                     isTaskRunning = true;
 
-                    name = nameEditText.getText().toString();
+//                    name = nameEditText.getText().toString();
+                    product = selectedProductId;
                     amount = amountEditText.getText().toString();
                     account = selectedAccountId;
                     status = statusEditText.getText().toString().toLowerCase();
 
                     JSONObject requestBody = new JSONObject();
                     try {
-                        requestBody.put("name", name);
+//                        requestBody.put("name", name);
+                        requestBody.put("product_id", product);
                         requestBody.put("amount", amount);
                         requestBody.put("account_id",account);
                         requestBody.put("status",status);
@@ -169,6 +179,22 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
         builder.show();
     }
 
+    private void showProductDialog(final View v,String[] productOptions, String[] productIds) {
+        final String[] array = productOptions;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Products");
+        builder.setSingleChoiceItems(array, checkedProduct, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ((EditText) v).setText(array[i]);
+                dialogInterface.dismiss();
+                checkedProduct = i;
+                selectedProductId = productIds[i];
+            }
+        });
+        builder.show();
+    }
+
 
 
     @Override
@@ -211,12 +237,17 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
 
                 try {
                     // Create a JSONObject from the response string
-                    JSONObject jsonObject = new JSONObject(result);
+                    JSONArray jsonArray = new JSONArray(result);
+
                     List<Account> items = new ArrayList<>();
                     List<String> accountNames = new ArrayList<>();
                     List<String> accountIds = new ArrayList<>();
+                    List<String> productNames = new ArrayList<>();
+                    List<String> productIds = new ArrayList<>();
 
 
+
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
                     JSONArray accounts = jsonObject.getJSONArray("accounts");
 //                    System.out.println("Accounts length: "+accounts.length());
                     for (int i = 0; i < accounts.length(); i++) {
@@ -243,6 +274,36 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
                         @Override
                         public void onClick(View view) {
                             showAccountDialog(view,accountNamesArray,accountIdsArray);
+                        }
+                    });
+
+                    JSONObject jsonObject2 = jsonArray.getJSONObject(0);
+                    JSONArray products = jsonObject2.getJSONArray("products");
+//                    System.out.println("Products length: "+products.length());
+                    for (int i = 0; i < products.length(); i++) {
+                        productNames.add(products.getJSONObject(i).getString("name"));
+                        productIds.add(products.getJSONObject(i).getString("id"));
+//                        Product obj = new Product();
+//                        //obj.image = drw_arr.getResourceId(i, -1);
+//                        obj.name = products.getJSONObject(i).getString("name");
+//                        obj.address = products.getJSONObject(i).getString("address");
+//                        obj.phone = products.getJSONObject(i).getString("phone");
+//                        obj.website = products.getJSONObject(i).getString("website");
+//
+//
+//                        //obj.imageDrw = drw_arr.getDrawable(obj.image);
+//                        items.add(obj);
+
+
+                    }
+
+                    String[] productNamesArray = productNames.toArray(new String[0]);
+                    String[] productIdsArray = productIds.toArray(new String[0]);
+
+                    productEditText.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showProductDialog(view,productNamesArray,productIdsArray);
                         }
                     });
 

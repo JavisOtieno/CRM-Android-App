@@ -1,11 +1,11 @@
 package com.example.crm;
 
 
-public class Contact {
+public class PhoneContact {
     private String name;
     private String phoneNumber;
 
-    public Contact(String name, String phoneNumber) {
+    public PhoneContact(String name, String phoneNumber) {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }

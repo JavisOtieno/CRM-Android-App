@@ -93,6 +93,7 @@ public class ProfileActivity extends AppCompatActivity implements OnSuccessListe
         NetworkUtils.
                 fetchDataGet("profile",
                         mAuthToken,ProfileActivity.this,ProfileActivity.this);
+
     }
 
     @Override

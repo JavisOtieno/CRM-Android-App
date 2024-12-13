@@ -41,8 +41,10 @@ import java.util.Locale;
 import android.Manifest;
 
 import com.example.crm.adapters.AdapterListDashboardDeals;
+import com.example.crm.adapters.AdapterListDashboardProducts;
 import com.example.crm.adapters.AdapterListDeals;
 import com.example.crm.models.Deal;
+import com.example.crm.models.Product;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -70,10 +72,12 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
     private View view;
 
     private RecyclerView recyclerView;
-    private AdapterListDashboardDeals mAdapter;
+    private AdapterListDashboardProducts mAdapter;
     private TextView emptyView;
     private TextView totalDealsThisMonth;
-    private TextView targetTextView;
+    private TextView totalDealsUnitsThisMonth;
+//    private TextView targetTextView;
+    private TextView monthTargetTitleTextView;
 
 
     public HomeFragment() {
@@ -182,8 +186,11 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
 
 
         totalDealsThisMonth = (TextView) view.findViewById(R.id.totalDealsThisMonth);
-        targetTextView = (TextView) view.findViewById(R.id.targetTextView);
+        totalDealsUnitsThisMonth = (TextView) view.findViewById(R.id.totalDealsUnitsThisMonth);
+//        targetTextView = (TextView) view.findViewById(R.id.targetTextView);
         emptyView = (TextView) view.findViewById(R.id.empty_view);
+        monthTargetTitleTextView = (TextView) view.findViewById(R.id.monthTargetTextView);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
@@ -425,34 +432,77 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
 
             // Create a JSONObject from the response string
             JSONObject jsonObject = new JSONObject(responseBody);
-            List<Deal> items = new ArrayList<>();
+            List<Product> items = new ArrayList<>();
 
-            Integer dealsThisMonth = Integer.parseInt(jsonObject.getString("totalDealsThisMonth"));
+            Integer dealsThisMonth = Integer.parseInt(jsonObject.getString("totalDealsKShThisMonth"));
             String dealsThisMonthStr = NumberFormat.getNumberInstance(Locale.US).format(dealsThisMonth);
-
             totalDealsThisMonth.setText(dealsThisMonthStr);
 
-            Integer target = Integer.parseInt(jsonObject.getString("target"));
+            Integer target = Integer.parseInt(jsonObject.getString("totalDealsUnitsThisMonth"));
             String targetStr = NumberFormat.getNumberInstance(Locale.US).format(target);
-            targetTextView.setText("Target : KSh. "+targetStr);
+            totalDealsUnitsThisMonth.setText(targetStr);
+//            targetTextView.setText("Total Qty : "+targetStr+" units");
+
+            String monthYear = jsonObject.getString("monthYear");
+            monthTargetTitleTextView.setText(monthYear+" Targets");
 
 
 
-            JSONArray deals = jsonObject.getJSONArray("recentdeals");
-            System.out.println("Accounts length: "+deals.length());
 
-            for (int i = 0; i < deals.length(); i++) {
-                Deal obj = new Deal();
+//            JSONArray deals = jsonObject.getJSONArray("recentdeals");
+//            System.out.println("Accounts length: "+deals.length());
+//
+//            for (int i = 0; i < deals.length(); i++) {
+//                Deal obj = new Deal();
+//                //obj.image = drw_arr.getResourceId(i, -1);
+//                obj.id = deals.getJSONObject(i).getString("id");
+//                obj.name = deals.getJSONObject(i).getJSONObject("product").getString("name");
+//                obj.amount =  "KSh. " + NumberFormat.getNumberInstance(Locale.US).format(
+//                        Integer.valueOf(deals.getJSONObject(i).getString("amount")));
+//                obj.status = deals.getJSONObject(i).getString("status");
+//                obj.account_name = deals.getJSONObject(i).
+//                        getJSONObject("account").getString("name");
+//
+//                String createdAt = deals.getJSONObject(i).getString("created_at");
+//                ZonedDateTime dateTime = Instant.parse(createdAt).atZone(ZoneId.of("Africa/Nairobi"));
+//                String formatted = dateTime.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm"));
+//                obj.date = formatted;
+//                //obj.imageDrw = drw_arr.getDrawable(obj.image);
+//                items.add(obj);
+//
+//            }
+
+            JSONArray products = jsonObject.getJSONArray("products");
+            System.out.println("Accounts length: "+products.length());
+
+            for (int i = 0; i < products.length(); i++) {
+                Product obj = new Product();
                 //obj.image = drw_arr.getResourceId(i, -1);
-                obj.id = deals.getJSONObject(i).getString("id");
-                obj.name = deals.getJSONObject(i).getString("name");
-                obj.amount =  "KSh. " + NumberFormat.getNumberInstance(Locale.US).format(
-                        Integer.valueOf(deals.getJSONObject(i).getString("amount")));
-                obj.status = deals.getJSONObject(i).getString("status");
-                obj.account_name = deals.getJSONObject(i).
-                        getJSONObject("account").getString("name");
+                obj.id = products.getJSONObject(i).getString("id");
+                obj.name = products.getJSONObject(i).getString("name");
+                obj.target_type = products.getJSONObject(i).getString("target_type");
+                Integer target_amount = Integer.valueOf(products.getJSONObject(i).getString("target_amount"));
+                Integer current_sold = Integer.valueOf(products.getJSONObject(i).getString("deals_sum_amount"));
+//                Integer current_sold = 0;
+                Integer remainder = target_amount - current_sold;
 
-                String createdAt = deals.getJSONObject(i).getString("created_at");
+
+                if(obj.target_type.equals("value")){
+                    obj.remaining_amount =  "KSh. " + NumberFormat.getNumberInstance(Locale.US).format(
+                            remainder<0?0:remainder);
+                    obj.target_amount = "KSh. " + NumberFormat.getNumberInstance(Locale.US).format(
+                            target_amount);
+                }else{
+                    obj.remaining_amount =   NumberFormat.getNumberInstance(Locale.US).format(
+                            remainder<0?0:remainder)
+                    +" units";
+                    obj.target_amount = NumberFormat.getNumberInstance(Locale.US).format(
+                            target_amount)+" units";
+                }
+
+
+
+                String createdAt = products.getJSONObject(i).getString("created_at");
                 ZonedDateTime dateTime = Instant.parse(createdAt).atZone(ZoneId.of("Africa/Nairobi"));
                 String formatted = dateTime.format(DateTimeFormatter.ofPattern("dd-MMM-yyyy HH:mm"));
                 obj.date = formatted;
@@ -472,18 +522,18 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
 
 
             //set data and list adapter
-            mAdapter = new AdapterListDashboardDeals(items);
+            mAdapter = new AdapterListDashboardProducts(items);
             recyclerView.setAdapter(mAdapter);
 
-            mAdapter.setOnItemClickListener(new AdapterListDashboardDeals.OnItemClickListener() {
+            mAdapter.setOnItemClickListener(new AdapterListDashboardProducts.OnItemClickListener() {
                 @Override
-                public void onItemClick(View view, Deal obj, int position) {
+                public void onItemClick(View view, Product obj, int position) {
 
-                    Deal deal = items.get(position);
+                    Product product = items.get(position);
 
-                    Intent intent = new Intent(getContext(), IndividualDealActivity.class);
-                    intent.putExtra("dealId",deal.id);
-                    System.out.println("dealId: "+deal.id);
+                    Intent intent = new Intent(getContext(), IndividualProductActivity.class);
+                    intent.putExtra("productId", product.id);
+                    System.out.println("productId: "+product.id);
                     startActivity(intent);
 
 

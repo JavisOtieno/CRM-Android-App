@@ -25,7 +25,7 @@ import okhttp3.ResponseBody;
 public class IndividualDealActivity extends AppCompatActivity implements OnSuccessListener {
     private Toolbar toolbar;
     private ActionBar actionBar;
-    private TextView dealNameTextView;
+    private TextView productNameTextView;
     private TextView accountNameTextView;
     private TextView amountTextView;
     private TextView statusTextView;
@@ -50,7 +50,7 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Deal");
 
-        dealNameTextView = (TextView) findViewById(R.id.dealNameTextView);
+        productNameTextView = (TextView) findViewById(R.id.productNameTextView);
         accountNameTextView = (TextView) findViewById(R.id.accountNameTextView);
         amountTextView = (TextView) findViewById(R.id.amountTextView);
         statusTextView = (TextView) findViewById(R.id.descriptionTextView);
@@ -108,7 +108,8 @@ public class IndividualDealActivity extends AppCompatActivity implements OnSucce
 
                     JSONObject deal = jsonObject.getJSONObject("deal");
 
-                    dealNameTextView.setText(deal.getString("name"));
+                    productNameTextView.setText(deal.getJSONObject("product").
+                            getString("name"));
                     accountNameTextView.setText(deal.getJSONObject("account")
                             .getString("name"));
                     amountTextView.setText(deal.getString("amount"));

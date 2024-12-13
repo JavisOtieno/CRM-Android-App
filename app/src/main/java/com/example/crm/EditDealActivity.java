@@ -31,12 +31,12 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
     private Toolbar toolbar;
     private ActionBar actionBar;
     private Button submitButton;
-    private EditText nameEditText;
+//    private EditText nameEditText;
     private EditText amountEditText;
     private EditText accountEditText;
     private EditText statusEditText;
     private Boolean isTaskRunning = false;
-    private String name;
+//    private String name;
     private String account;
     private String status;
     private String amount;
@@ -44,6 +44,12 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
     private Integer checkedAccount=-1;
     private String selectedAccountId="0";
     private String[] array = {"Pending", "Complete", "Cancelled"};
+
+    private String selectedProductId = "0";
+    private Integer checkedProduct=-1;
+    private String product;
+    private EditText productEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +76,12 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
                         EditDealActivity.this);
 
         submitButton = (Button)findViewById(R.id.submitButton);
-        nameEditText = (EditText)findViewById(R.id.nameEditText);
+//        nameEditText = (EditText)findViewById(R.id.nameEditText);
+
         amountEditText = (EditText)findViewById(R.id.amountEditText);
         accountEditText = (EditText)findViewById(R.id.accountEditText);
         statusEditText = (EditText)findViewById(R.id.statusEditText);
+        productEditText = (EditText)findViewById(R.id.productEditText);
 
         statusEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,14 +100,14 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
                 if (!isTaskRunning) {
                     isTaskRunning = true;
 
-                    name = nameEditText.getText().toString();
+                    product = selectedProductId;
                     amount = amountEditText.getText().toString();
                     account = selectedAccountId;
                     status = statusEditText.getText().toString().toLowerCase();
 
                     JSONObject requestBody = new JSONObject();
                     try {
-                        requestBody.put("name", name);
+                        requestBody.put("product_id", product);
                         requestBody.put("amount", amount);
                         requestBody.put("account_id",account);
                         requestBody.put("status",status);
@@ -155,6 +163,23 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
         builder.show();
     }
 
+    private void showProductDialog(final View v,String[] productOptions, String[] productIds) {
+        final String[] array = productOptions;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Products");
+        builder.setSingleChoiceItems(array, checkedProduct, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ((EditText) v).setText(array[i]);
+                dialogInterface.dismiss();
+                checkedProduct = i;
+                selectedProductId = productIds[i];
+            }
+        });
+        builder.show();
+    }
+
+
     private void showAccountDialog(final View v,String[] accountOptions, String[] accountIds) {
         final String[] array = accountOptions;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -170,6 +195,8 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
         });
         builder.show();
     }
+
+
 
 
 
@@ -217,11 +244,15 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
                     List<Account> items = new ArrayList<>();
                     List<String> accountNames = new ArrayList<>();
                     List<String> accountIds = new ArrayList<>();
+                    List<String> productNames = new ArrayList<>();
+                    List<String> productIds = new ArrayList<>();
 
                     JSONObject deal = jsonObject.getJSONObject("deal");
-                    nameEditText.setText(deal.getString("name"));
+//                    nameEditText.setText(deal.getString("name"));
+                    productEditText.setText(deal.getJSONObject("product").getString("name"));
                     amountEditText.setText(deal.getString("amount"));
                     selectedAccountId=deal.getJSONObject("account").getString("id");
+                    selectedProductId=deal.getJSONObject("product").getString("id");
                     accountEditText.setText(deal.getJSONObject("account").getString("name"));
                     String statusFromDb=deal.getString("status");
 //                    if(statusFromDb.equals("pending"))
@@ -246,6 +277,7 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
 
                     }
 
+
                     String[] accountNamesArray = accountNames.toArray(new String[0]);
                     String[] accountIdsArray = accountIds.toArray(new String[0]);
 
@@ -253,6 +285,41 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
                         @Override
                         public void onClick(View view) {
                             showAccountDialog(view,accountNamesArray,accountIdsArray);
+                        }
+                    });
+
+
+                    JSONArray products = jsonObject.getJSONArray("products");
+//                    System.out.println("Products length: "+products.length());
+                    for (int i = 0; i < products.length(); i++) {
+                        productNames.add(products.getJSONObject(i).getString("name"));
+                        String productId = products.getJSONObject(i).getString("id");
+                        productIds.add(productId);
+                        if (productId.equals(selectedProductId)){
+                            checkedProduct = i;
+                        }
+//                        Product obj = new Product();
+//                        //obj.image = drw_arr.getResourceId(i, -1);
+//                        obj.name = products.getJSONObject(i).getString("name");
+//                        obj.address = products.getJSONObject(i).getString("address");
+//                        obj.phone = products.getJSONObject(i).getString("phone");
+//                        obj.website = products.getJSONObject(i).getString("website");
+//
+//
+//                        //obj.imageDrw = drw_arr.getDrawable(obj.image);
+//                        items.add(obj);
+
+
+                    }
+
+                    String[] productNamesArray = productNames.toArray(new String[0]);
+                    String[] productIdsArray = productIds.toArray(new String[0]);
+
+
+                    productEditText.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showProductDialog(view,productNamesArray,productIdsArray);
                         }
                     });
 

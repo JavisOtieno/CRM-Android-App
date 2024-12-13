@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UNUSEDAccountsActivity">
+    tools:context=".StatsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -430,7 +430,7 @@
                             android:layout_width="@dimen/spacing_mxlarge"
                             android:layout_height="@dimen/spacing_mxlarge"
                             app:srcCompat="@drawable/ic_call"
-                            app:tint="@color/red_400" />
+                            app:tint="@color/green_400" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -440,13 +440,13 @@
                             android:text="0"
                             android:id="@+id/callsNumberTextView"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
-                            android:textColor="@color/red_400" />
+                            android:textColor="@color/green_400" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_middle"
-                            android:text="Visits"
+                            android:text="Calls"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
                             android:textColor="@color/grey_60" />
 
