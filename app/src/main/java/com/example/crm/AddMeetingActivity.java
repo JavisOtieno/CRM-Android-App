@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.crm.models.Account;
+import com.example.crm.models.Contact;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,8 +26,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 
@@ -313,6 +316,7 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                     List<String> accountIds = new ArrayList<>();
                     List<String> contactNames = new ArrayList<>();
                     List<String> contactIds = new ArrayList<>();
+                    Map<String, List<Contact>> contactsMap = new HashMap<>();
 
                     JSONArray accounts = jsonArray.getJSONObject(0).
                             getJSONArray("accounts");
@@ -329,6 +333,22 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                     for (int i = 0; i < contacts.length(); i++) {
                         contactNames.add(contacts.getJSONObject(i).getString("name"));
                         contactIds.add(contacts.getJSONObject(i).getString("id"));
+
+                        String accountId = contacts.getJSONObject(i).getString("account_id");
+                        String contactName = contacts.getJSONObject(i).getString("name");
+                        String contactId = contacts.getJSONObject(i).getString("id");
+
+                        // Create a new Contact object
+                        Contact contact = new Contact();
+                        contact.name = contactName;
+                        contact.id = contactId;
+
+                        // If the accountId is not already in the map, create a new list
+                        if (!contactsMap.containsKey(accountId)) {
+                            contactsMap.put(accountId,new ArrayList<Contact>());
+                        }
+                        // Add the contact to the appropriate account's list
+                        contactsMap.get(accountId).add(contact);
 
                     }
 
@@ -353,7 +373,9 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                     contactEditText.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showAccountDialog(view, contactNamesArray, contactIdsArray,"Contacts");
+//                            showAccountDialog(view, contactNamesArray, contactIdsArray,"Contacts");
+                            showContactsDialog(view, contactNamesArray, contactIdsArray,contactsMap,"Contacts");
+
                         }
                     });
 
@@ -406,6 +428,9 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                 if(title.equals("Accounts")){
                     checkedAccount = i;
                     selectedAccountId = Ids[i];
+                    contactEditText.setText("");
+                    selectedContactId="0";
+                    checkedContact = -1;
                 }else{
                     checkedContact= i;
                     selectedContactId = Ids[i];
@@ -415,6 +440,87 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
         });
         builder.show();
     }
+
+
+    private void showContactsDialog(final View v,String[] contactOptions, String[] Ids, Map<String, List<Contact>> contactsMap,
+                                    String title) {
+        final String[] array = contactOptions;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        Integer checkedItem;
+
+        checkedItem=checkedContact;
+
+
+        if(selectedAccountId.equals("0")){
+//            Toasts.toastIconError(AddCallActivity.this,selectedAccountId+" out ");
+            builder.setSingleChoiceItems(array, checkedItem, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ((EditText) v).setText(array[i]);
+                    dialogInterface.dismiss();
+                    checkedContact= i;
+                    selectedContactId = Ids[i];
+                }
+            });
+
+        }else{
+//            Toasts.toastIconError(AddCallActivity.this,selectedAccountId+" right here");
+            builder.setSingleChoiceItems(getContactNamesForAccount(selectedAccountId,contactsMap), checkedItem, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Set the selected contact name in the EditText view
+                    ((EditText) v).setText(getContactNamesForAccount(selectedAccountId,contactsMap)[i]);
+
+                    // Dismiss the dialog
+                    dialogInterface.dismiss();
+
+                    // Update checked contact index and contact ID
+                    checkedContact = i;
+
+                    // Get the contact ID from the map using the selected index
+                    selectedContactId = getContactIdsForAccount(selectedAccountId,contactsMap).get(i);
+                }
+            });
+
+
+        }
+
+
+        builder.show();
+    }
+
+    // Method to get contact names for a specific account
+    private String[] getContactNamesForAccount(String accountId,
+                                               Map<String, List<Contact>> contactsMap
+    ) {
+        List<Contact> contactsList = contactsMap.get(accountId);
+        if (contactsList == null) {
+            return new String[]{};
+        }
+
+        String[] contactNames = new String[contactsList.size()];
+        for (int i = 0; i < contactsList.size(); i++) {
+            contactNames[i] = contactsList.get(i).name;
+        }
+        return contactNames;
+    }
+
+    private List<String> getContactIdsForAccount(String accountId,
+                                                 Map<String, List<Contact>> contactsMap) {
+        List<Contact> contactsList = contactsMap.get(accountId);
+        List<String> contactIds = new ArrayList<>();
+
+        if (contactsList != null) {
+            for (Contact contact : contactsList) {
+                contactIds.add(contact.id);
+            }
+        }
+
+        return contactIds;
+    }
+
+
 
 
 

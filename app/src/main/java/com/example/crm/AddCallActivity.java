@@ -397,6 +397,9 @@ public class AddCallActivity extends AppCompatActivity implements OnSuccessListe
                 if(title.equals("Accounts")){
                     checkedAccount = i;
                     selectedAccountId = Ids[i];
+                    contactEditText.setText("");
+                    selectedContactId="0";
+                    checkedContact = -1;
                 }else{
                     checkedContact= i;
                     selectedContactId = Ids[i];

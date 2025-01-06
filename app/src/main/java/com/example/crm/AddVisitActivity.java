@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.crm.models.Account;
+import com.example.crm.models.Location;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,8 +26,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 
@@ -270,6 +273,7 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                     List<String> accountIds = new ArrayList<>();
                     List<String> locationNames = new ArrayList<>();
                     List<String> locationIds = new ArrayList<>();
+                    Map<String, List<Location>> locationsMap = new HashMap<>();
 
                     JSONArray accounts = jsonArray.getJSONObject(0).
                             getJSONArray("accounts");
@@ -286,6 +290,22 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                     for (int i = 0; i < locations.length(); i++) {
                         locationNames.add(locations.getJSONObject(i).getString("name"));
                         locationIds.add(locations.getJSONObject(i).getString("id"));
+
+                        String accountId = locations.getJSONObject(i).getString("account_id");
+                        String locationName = locations.getJSONObject(i).getString("name");
+                        String locationId = locations.getJSONObject(i).getString("id");
+
+                        // Create a new Location object
+                        Location location = new Location();
+                        location.name = locationName;
+                        location.id = locationId;
+
+                        // If the accountId is not already in the map, create a new list
+                        if (!locationsMap.containsKey(accountId)) {
+                            locationsMap.put(accountId,new ArrayList<Location>());
+                        }
+                        // Add the location to the appropriate account's list
+                        locationsMap.get(accountId).add(location);
 
                     }
 
@@ -310,7 +330,9 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                     locationEditText.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            showAccountDialog(view, locationNamesArray, locationIdsArray,"Locations");
+                            showLocationsDialog(view, locationNamesArray, locationIdsArray,locationsMap,"Locations");
+
+//                            showAccountDialog(view, locationNamesArray, locationIdsArray,"Locations");
                         }
                     });
 
@@ -363,6 +385,9 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                 if(title.equals("Accounts")){
                     checkedAccount = i;
                     selectedAccountId = Ids[i];
+                    locationEditText.setText("");
+                    selectedLocationId="0";
+                    checkedLocation = -1;
                 }else{
                     checkedLocation= i;
                     selectedLocationId = Ids[i];
@@ -372,6 +397,88 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
         });
         builder.show();
     }
+
+    private void showLocationsDialog(final View v,String[] locationOptions, String[] Ids, Map<String, List<Location>> locationsMap,
+                                    String title) {
+        final String[] array = locationOptions;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        Integer checkedItem;
+
+        checkedItem=checkedLocation;
+
+
+        if(selectedAccountId.equals("0")){
+//            Toasts.toastIconError(AddCallActivity.this,selectedAccountId+" out ");
+            builder.setSingleChoiceItems(array, checkedItem, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ((EditText) v).setText(array[i]);
+                    dialogInterface.dismiss();
+                    checkedLocation= i;
+                    selectedLocationId = Ids[i];
+                }
+            });
+
+        }else{
+//            Toasts.toastIconError(AddCallActivity.this,selectedAccountId+" right here");
+            builder.setSingleChoiceItems(getLocationNamesForAccount(selectedAccountId,locationsMap), checkedItem, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    // Set the selected location name in the EditText view
+                    ((EditText) v).setText(getLocationNamesForAccount(selectedAccountId,locationsMap)[i]);
+
+                    // Dismiss the dialog
+                    dialogInterface.dismiss();
+
+                    // Update checked location index and location ID
+                    checkedLocation = i;
+
+                    // Get the location ID from the map using the selected index
+                    selectedLocationId = getLocationIdsForAccount(selectedAccountId,locationsMap).get(i);
+                }
+            });
+
+
+        }
+
+
+        builder.show();
+    }
+
+    // Method to get location names for a specific account
+    private String[] getLocationNamesForAccount(String accountId,
+                                               Map<String, List<Location>> locationsMap
+    ) {
+        List<Location> locationsList = locationsMap.get(accountId);
+        if (locationsList == null) {
+            return new String[]{};
+        }
+
+        String[] locationNames = new String[locationsList.size()];
+        for (int i = 0; i < locationsList.size(); i++) {
+            locationNames[i] = locationsList.get(i).name;
+        }
+        return locationNames;
+    }
+
+    private List<String> getLocationIdsForAccount(String accountId,
+                                                 Map<String, List<Location>> locationsMap) {
+        List<Location> locationsList = locationsMap.get(accountId);
+        List<String> locationIds = new ArrayList<>();
+
+        if (locationsList != null) {
+            for (Location location : locationsList) {
+                locationIds.add(location.id);
+            }
+        }
+
+        return locationIds;
+    }
+
+
+
+
 
 
 }
