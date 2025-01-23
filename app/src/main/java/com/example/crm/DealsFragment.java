@@ -272,8 +272,11 @@ public class DealsFragment extends Fragment implements OnSuccessListener  {
             // Handle the "Add" action
 //            Toast.makeText(getActivity(), "Add action clicked", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(getContext(), AddDealActivity.class);
+//            Intent intent = new Intent(getContext(), AddDealActivity.class);
+//            startActivity(intent);
+            Intent intent = new Intent(getContext(), SelectLeadAccountActivity.class);
             startActivity(intent);
+
             return true;
         }
 
@@ -306,8 +309,26 @@ public class DealsFragment extends Fragment implements OnSuccessListener  {
                 obj.amount =  "KSh. " + NumberFormat.getNumberInstance(Locale.US).format(
                         Integer.valueOf(deals.getJSONObject(i).getString("amount")));
                 obj.status = deals.getJSONObject(i).getString("status");
-                obj.account_name = deals.getJSONObject(i).
-                        getJSONObject("account").getString("name");
+//                Toasts.toastIconError(getContext(),obj.status);
+
+                String accountName = "";
+
+//                if (
+//                deals.getJSONObject(i).has("lead") &&
+//                        deals.getJSONObject(i).get("lead") instanceof JSONObject
+//                ) {
+//                    accountName = deals.getJSONObject(i).
+//                            getJSONObject("lead").getString("name");
+//                }else if(
+//                        deals.getJSONObject(i).has("account") &&
+//                                deals.getJSONObject(i).get("account") instanceof JSONObject
+//                ){
+
+//                }
+                accountName = deals.getJSONObject(i).
+                        getJSONObject("account").optString("name");
+
+                obj.account_name = accountName;
 
                 String createdAt = deals.getJSONObject(i).getString("created_at");
                 ZonedDateTime dateTime = Instant.parse(createdAt).atZone(ZoneId.of("Africa/Nairobi"));

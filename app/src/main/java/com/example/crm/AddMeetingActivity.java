@@ -57,6 +57,7 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
     private Integer checkedType=-1;
     private Integer checkedAccount=-1;
     private Integer checkedContact=-1;
+    private String endpoint;
 
 
     @Override
@@ -77,8 +78,9 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Meeting");
 
+        endpoint = "accountscontacts";
         NetworkUtils.
-                fetchDataGet("accountscontacts",
+                fetchDataGet(endpoint,
                         "",AddMeetingActivity.this,
                         AddMeetingActivity.this);
 
@@ -203,8 +205,9 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                         e.printStackTrace();
                     }
 
+                    endpoint = "addmeeting";
                     NetworkUtils.
-                            fetchDataPost("addmeeting",
+                            fetchDataPost(endpoint,
                                     "", requestBody,AddMeetingActivity.this,
                                     AddMeetingActivity.this);
 
@@ -279,7 +282,8 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Meeting")){
+            if (result != null && result.contains("Meeting")
+            && endpoint.contains( "addmeeting")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -306,7 +310,8 @@ public class AddMeetingActivity extends AppCompatActivity implements OnSuccessLi
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")) {
+            else if(result != null && result.contains("\"accounts\":") &&
+                    endpoint.contains( "accountscontacts")) {
 
                 try {
                     // Create a JSONObject from the response string

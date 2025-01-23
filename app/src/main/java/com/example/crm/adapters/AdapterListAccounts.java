@@ -75,7 +75,7 @@ public class AdapterListAccounts extends RecyclerView.Adapter<RecyclerView.ViewH
             OriginalViewHolder view = (OriginalViewHolder) holder;
 
             Account p = items.get(position);
-            view.name.setText(p.name);
+            view.name.setText(p.account_name);
             view.date.setText(p.date);
             view.address.setText(p.address);
             view.website.setText(p.website);

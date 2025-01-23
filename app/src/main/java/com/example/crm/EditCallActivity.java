@@ -63,6 +63,7 @@ public class EditCallActivity extends AppCompatActivity implements OnSuccessList
     private String mTime;
     private String mDate;
     private String mCallId;
+    private String endpoint;
 
 
     @Override
@@ -117,8 +118,9 @@ public class EditCallActivity extends AppCompatActivity implements OnSuccessList
         }
 
 
+        endpoint = "accountscontacts";
         NetworkUtils.
-                fetchDataGet("accountscontacts",
+                fetchDataGet(endpoint,
                         "", EditCallActivity.this,
                         EditCallActivity.this);
 
@@ -243,9 +245,10 @@ public class EditCallActivity extends AppCompatActivity implements OnSuccessList
                         e.printStackTrace();
                     }
 
+                    endpoint = "submiteditcall/"+mCallId;
                     NetworkUtils.
-                            fetchDataPost("submiteditcall/"+mCallId,
-                                    "", requestBody, EditCallActivity.this,
+                            fetchDataPost(
+                                    endpoint,"", requestBody, EditCallActivity.this,
                                     EditCallActivity.this);
 
 
@@ -302,7 +305,8 @@ public class EditCallActivity extends AppCompatActivity implements OnSuccessList
             String result = responseBody.string();
             System.out.println("Result: " + result);
 
-            if (result != null && result.contains("Call")) {
+            if (result != null && result.contains("Call")
+            && endpoint.contains("submiteditcall")) {
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -327,7 +331,8 @@ public class EditCallActivity extends AppCompatActivity implements OnSuccessList
 
                 }
 
-            } else if (result != null && result.contains("\"accounts\":")) {
+            } else if (result != null && result.contains("\"accounts\":")
+                    && endpoint.contains("accountscontacts")) {
 
                 try {
                     // Create a JSONObject from the response string

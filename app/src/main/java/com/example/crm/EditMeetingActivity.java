@@ -67,6 +67,7 @@ public class EditMeetingActivity extends AppCompatActivity implements OnSuccessL
     private String[] typeArray = new String[]{
             "Online", "Physical"
     };
+    private String endpoint;
 
 
 
@@ -88,8 +89,9 @@ public class EditMeetingActivity extends AppCompatActivity implements OnSuccessL
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Edit Meeting");
 
+        endpoint = "accountscontacts";
         NetworkUtils.
-                fetchDataGet("accountscontacts",
+                fetchDataGet(endpoint,
                         "",EditMeetingActivity.this,
                         EditMeetingActivity.this);
 
@@ -266,8 +268,9 @@ public class EditMeetingActivity extends AppCompatActivity implements OnSuccessL
                         e.printStackTrace();
                     }
 
+                    endpoint = "submiteditmeeting/"+mMeetingId;
                     NetworkUtils.
-                            fetchData("PUT","submiteditmeeting/"+mMeetingId,
+                            fetchData(endpoint,"PUT",
                                     requestBody,EditMeetingActivity.this,
                                     EditMeetingActivity.this);
 
@@ -337,7 +340,8 @@ public class EditMeetingActivity extends AppCompatActivity implements OnSuccessL
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Meeting")){
+            if (result != null && result.contains("Meeting")
+                    && endpoint.contains("submiteditmeeting")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -355,6 +359,8 @@ public class EditMeetingActivity extends AppCompatActivity implements OnSuccessL
                 else if(result.contains("errors")){
                     String message = jsonObject.getString("message");
                     Toasts.toastIconError(EditMeetingActivity.this,message);
+
+
                     //Toast.makeText(getBaseContext(), message, Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -365,7 +371,8 @@ public class EditMeetingActivity extends AppCompatActivity implements OnSuccessL
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")) {
+            else if(result != null && result.contains("\"accounts\":")
+                    && !endpoint.contains("submiteditmeeting")) {
 
                 try {
                     // Create a JSONObject from the response string

@@ -64,6 +64,7 @@ public class EditTaskActivity extends AppCompatActivity implements OnSuccessList
     private String[] statusArray = new String[]{
             "Pending", "Complete", "Cancelled"
     };
+    private String endpoint;
 
 
 
@@ -85,8 +86,9 @@ public class EditTaskActivity extends AppCompatActivity implements OnSuccessList
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Edit Task");
 
+        endpoint = "accountscontacts";
         NetworkUtils.
-                fetchDataGet("accountscontacts",
+                fetchDataGet(endpoint,
                         "",EditTaskActivity.this,
                         EditTaskActivity.this);
 
@@ -238,14 +240,17 @@ public class EditTaskActivity extends AppCompatActivity implements OnSuccessList
                         requestBody.put("account_id",account);
                         requestBody.put("date",dateToBeSaved);
                         requestBody.put("time",time);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
+                    endpoint = "submitedittask/"+mTaskId;
                     NetworkUtils.
-                            fetchData("PUT","submitedittask/"+mTaskId,
+                            fetchData("PUT",endpoint,
                                      requestBody,EditTaskActivity.this,
                                     EditTaskActivity.this);
+
 
 
 
@@ -296,7 +301,8 @@ public class EditTaskActivity extends AppCompatActivity implements OnSuccessList
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Task")){
+            if (result != null && result.contains("Task") &&
+                    endpoint.contains("submitedittask")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -324,7 +330,8 @@ public class EditTaskActivity extends AppCompatActivity implements OnSuccessList
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")) {
+            else if(result != null && result.contains("\"accounts\":")
+                    && !endpoint.contains("submitedittask")) {
 
                 try {
                     // Create a JSONObject from the response string

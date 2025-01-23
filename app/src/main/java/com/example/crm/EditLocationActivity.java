@@ -47,6 +47,7 @@ public class EditLocationActivity extends AppCompatActivity implements OnSuccess
     private Button importButton;
 
     private String mLocationId;
+    private String endpoint;
 
 
     @Override
@@ -101,8 +102,9 @@ public class EditLocationActivity extends AppCompatActivity implements OnSuccess
 
 
 
+        endpoint = "accounts";
         NetworkUtils.
-                fetchDataGet("accounts",
+                fetchDataGet(endpoint,
                         "",EditLocationActivity.this,
                         EditLocationActivity.this);
 
@@ -143,8 +145,9 @@ public class EditLocationActivity extends AppCompatActivity implements OnSuccess
                         e.printStackTrace();
                     }
 
+                    endpoint = "submiteditlocation/"+mLocationId;
                     NetworkUtils.
-                            fetchData("PUT","submiteditlocation/"+mLocationId,
+                            fetchData("PUT",endpoint,
                                     requestBody,EditLocationActivity.this,
                                     EditLocationActivity.this);
 
@@ -180,7 +183,8 @@ public class EditLocationActivity extends AppCompatActivity implements OnSuccess
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Location")){
+            if (result != null && result.contains("Location")
+                    && endpoint.contains("submiteditlocation")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -207,7 +211,9 @@ public class EditLocationActivity extends AppCompatActivity implements OnSuccess
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")){
+            else if(result != null && result.contains("\"accounts\":")
+                     && !endpoint.contains("submiteditlocation")
+            ){
 
                 try {
                     // Create a JSONObject from the response string

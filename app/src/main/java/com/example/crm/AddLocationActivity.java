@@ -45,6 +45,7 @@ public class AddLocationActivity extends AppCompatActivity implements OnSuccessL
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
     private Button importButton;
+    private String endpoint;
 
 
     @Override
@@ -65,10 +66,9 @@ public class AddLocationActivity extends AppCompatActivity implements OnSuccessL
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Location");
 
-
-
+        endpoint = "accounts";
         NetworkUtils.
-                fetchDataGet("accounts",
+                fetchDataGet(endpoint,
                         "",AddLocationActivity.this,
                         AddLocationActivity.this);
 
@@ -115,8 +115,10 @@ public class AddLocationActivity extends AppCompatActivity implements OnSuccessL
                         e.printStackTrace();
                     }
 
+
+                    endpoint = "addlocation";
                     NetworkUtils.
-                            fetchDataPost("addlocation",
+                            fetchDataPost(endpoint,
                                     "", requestBody,AddLocationActivity.this,
                                     AddLocationActivity.this);
 
@@ -152,7 +154,8 @@ public class AddLocationActivity extends AppCompatActivity implements OnSuccessL
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Location")){
+            if (result != null && result.contains("Location") &&
+            endpoint.contains("addlocation")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -179,7 +182,8 @@ public class AddLocationActivity extends AppCompatActivity implements OnSuccessL
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")){
+            else if(result != null && result.contains("\"accounts\":") &&
+                    endpoint.contains( "accounts")){
 
                 try {
                     // Create a JSONObject from the response string

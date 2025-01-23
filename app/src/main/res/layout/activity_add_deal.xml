@@ -42,6 +42,21 @@
 <!--                android:paddingRight="@dimen/spacing_middle" />-->
 
             <EditText
+                android:id="@+id/accountEditText"
+                style="@style/EditText.Flat.Grey"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:background="@drawable/edit_text_round_bg_white"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="Account"
+                android:paddingLeft="@dimen/spacing_middle" />
+            <!--                android:drawableEnd="@drawable/ic_expand_arrow"-->
+            <!--                android:drawableRight="@drawable/ic_expand_arrow"-->
+            <!--               -->
+
+            <EditText
                 android:id="@+id/productEditText"
                 style="@style/EditText.Flat.Grey"
                 android:layout_width="match_parent"
@@ -67,19 +82,6 @@
                 android:paddingLeft="@dimen/spacing_middle"
                 android:paddingRight="@dimen/spacing_middle" />
 
-            <EditText
-                android:id="@+id/accountEditText"
-                style="@style/EditText.Flat.Grey"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginTop="@dimen/spacing_large"
-                android:background="@drawable/edit_text_round_bg_white"
-                android:drawableEnd="@drawable/ic_expand_arrow"
-                android:drawableRight="@drawable/ic_expand_arrow"
-                android:editable="false"
-                android:focusable="false"
-                android:hint="Account"
-                android:paddingLeft="@dimen/spacing_middle" />
 
 
             <EditText

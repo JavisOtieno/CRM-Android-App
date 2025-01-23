@@ -54,6 +54,7 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
     private Integer checkedLocation=-1;
+    private String endpoint;
 
 
     @Override
@@ -74,8 +75,9 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Visit");
 
+        endpoint ="accountslocations";
         NetworkUtils.
-                fetchDataGet("accountslocations",
+                fetchDataGet(endpoint,
                         "",AddVisitActivity.this,
                         AddVisitActivity.this);
 
@@ -180,8 +182,10 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                         e.printStackTrace();
                     }
 
+                    endpoint = "addvisit";
+
                     NetworkUtils.
-                            fetchDataPost("addvisit",
+                            fetchDataPost(endpoint,
                                     "", requestBody,AddVisitActivity.this,
                                     AddVisitActivity.this);
 
@@ -236,7 +240,8 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Visit")){
+            if (result != null && result.contains("Visit")
+                    && endpoint.contains("addvisit")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -263,7 +268,8 @@ public class AddVisitActivity extends AppCompatActivity implements OnSuccessList
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")) {
+            else if(result != null && result.contains("\"accounts\":")
+            && endpoint.contains("accountslocations")) {
 
                 try {
                     // Create a JSONObject from the response string

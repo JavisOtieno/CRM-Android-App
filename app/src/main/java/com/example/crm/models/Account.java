@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class Account implements Serializable {
 
     public String id;
-    public String name;
+    public String account_name;
     public String phone;
     public String website;
     public String address;

@@ -49,6 +49,7 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
     private Integer checkedProduct=-1;
     private String product;
     private EditText productEditText;
+    private String endpoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +71,9 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
 
         String dealId = getIntent().getStringExtra("dealId");
 
+        endpoint ="editdeal/"+dealId ;
         NetworkUtils.
-                fetchDataGet("editdeal/"+dealId,
+                fetchDataGet(endpoint,
                         "",EditDealActivity.this,
                         EditDealActivity.this);
 
@@ -115,8 +117,9 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
                         e.printStackTrace();
                     }
 
+                    endpoint = "submiteditdeal/"+dealId;
                     NetworkUtils.
-                            fetchDataPost("submiteditdeal/"+dealId,
+                            fetchDataPost(endpoint,
                                     "", requestBody,EditDealActivity.this,
                                     EditDealActivity.this);
 
@@ -208,7 +211,8 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Deal")){
+            if (result != null && result.contains("Deal") &&
+                    endpoint.contains("submiteditdeal")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -236,7 +240,8 @@ public class EditDealActivity extends AppCompatActivity implements OnSuccessList
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")){
+            else if(result != null && result.contains("\"accounts\":") &&
+                    !endpoint.contains("submiteditdeal")){
 
                 try {
                     // Create a JSONObject from the response string

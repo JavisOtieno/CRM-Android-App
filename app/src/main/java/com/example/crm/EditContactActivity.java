@@ -42,6 +42,7 @@ public class EditContactActivity extends AppCompatActivity implements OnSuccessL
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
     private String mContactId;
+    private String endpoint;
 
 
     @Override
@@ -91,8 +92,9 @@ public class EditContactActivity extends AppCompatActivity implements OnSuccessL
             e.printStackTrace();
         }
 
+        endpoint = "accounts";
         NetworkUtils.
-                fetchDataGet("accounts",
+                fetchDataGet(endpoint,
                         "",EditContactActivity.this,
                         EditContactActivity.this);
 
@@ -109,6 +111,7 @@ public class EditContactActivity extends AppCompatActivity implements OnSuccessL
             nameEditText.setText(contactName);
 
         }
+
         String contactPhone = getIntent().getStringExtra("contactPhone");
         if (contactPhone == null || contactPhone.isEmpty()) {
             // Handle the case where contactName is null or empty
@@ -143,8 +146,9 @@ public class EditContactActivity extends AppCompatActivity implements OnSuccessL
                         e.printStackTrace();
                     }
 
+                    endpoint = "submiteditcontact/"+mContactId;
                     NetworkUtils.
-                            fetchData("PUT","submiteditcontact/"+mContactId, requestBody,
+                            fetchData("PUT",endpoint, requestBody,
                                     EditContactActivity.this,
                                     EditContactActivity.this);
 
@@ -180,7 +184,8 @@ public class EditContactActivity extends AppCompatActivity implements OnSuccessL
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Contact")){
+            if (result != null && result.contains("Contact") &&
+                    endpoint.contains("submiteditcontact")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -207,7 +212,8 @@ public class EditContactActivity extends AppCompatActivity implements OnSuccessL
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")){
+            else if(result != null && result.contains("\"accounts\":") &&
+                    endpoint.contains("accounts")){
 
                 try {
                     // Create a JSONObject from the response string

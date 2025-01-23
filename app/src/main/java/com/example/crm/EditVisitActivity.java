@@ -62,6 +62,7 @@ public class EditVisitActivity extends AppCompatActivity implements OnSuccessLis
     private String mTime;
     private String mDate;
     private String mVisitId;
+    private String endpoint;
 
 
     @Override
@@ -118,10 +119,12 @@ public class EditVisitActivity extends AppCompatActivity implements OnSuccessLis
             e.printStackTrace();
         }
 
+        endpoint = "accountslocations";
         NetworkUtils.
-                fetchDataGet("accountslocations",
+                fetchDataGet(endpoint,
                         "", EditVisitActivity.this,
                         EditVisitActivity.this);
+
 
 
         statusEditText.setOnClickListener(new View.OnClickListener() {
@@ -234,8 +237,9 @@ public class EditVisitActivity extends AppCompatActivity implements OnSuccessLis
                         e.printStackTrace();
                     }
 
+                    endpoint = "submiteditvisit/"+mVisitId;
                     NetworkUtils.
-                            fetchData("PUT","submiteditvisit/"+mVisitId, requestBody, EditVisitActivity.this,
+                            fetchData("PUT", endpoint, requestBody, EditVisitActivity.this,
                                     EditVisitActivity.this);
 
 
@@ -289,7 +293,8 @@ public class EditVisitActivity extends AppCompatActivity implements OnSuccessLis
             String result = responseBody.string();
             System.out.println("Result: " + result);
 
-            if (result != null && result.contains("Visit")) {
+            if (result != null && result.contains("Visit") &&
+            endpoint.contains("submiteditvisit")) {
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -313,7 +318,10 @@ public class EditVisitActivity extends AppCompatActivity implements OnSuccessLis
 
                 }
 
-            } else if (result != null && result.contains("\"accounts\":")) {
+            }
+            else if (result != null && result.contains("\"accounts\":")
+                            && endpoint.contains("accountslocations")
+                    ) {
 
                 try {
                     // Create a JSONObject from the response string

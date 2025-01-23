@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.crm.models.Account;
+import com.example.crm.models.Contact;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,10 +45,12 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
 
-    private String selectedAccountId="0";
+    private String selectedAccountLeadId ="0";
     private String selectedProductId = "0";
     private Integer checkedProduct=-1;
     private String product;
+    private String accountOrLead = "";
+    private String endpoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +70,13 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Deal");
 
+        Intent intent = getIntent();
+
+        accountOrLead = intent.getStringExtra("accountOrLead");
+
+        endpoint = "accountsproducts";
         NetworkUtils.
-                fetchDataGet("accountsproducts",
+                fetchDataGet(endpoint,
                         "",AddDealActivity.this,
                         AddDealActivity.this);
 
@@ -78,6 +86,21 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
         amountEditText = (EditText)findViewById(R.id.amountEditText);
         accountEditText = (EditText)findViewById(R.id.accountEditText);
         statusEditText = (EditText)findViewById(R.id.statusEditText);
+
+//        Toasts.toastIconError(AddDealActivity.this,accountOrLead);
+
+        if (accountOrLead.equals("lead")) {
+            accountEditText.setHint("Lead");
+            Contact contact = (Contact) intent.getSerializableExtra("lead");
+            accountEditText.setText(contact.name);
+            selectedAccountLeadId = contact.id;
+        } else {
+            accountEditText.setHint("Account");
+            Account account = (Account) intent.getSerializableExtra("account");
+            accountEditText.setText(account.account_name);
+            selectedAccountLeadId = account.id;
+        }
+
 
         statusEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,22 +122,28 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
 //                    name = nameEditText.getText().toString();
                     product = selectedProductId;
                     amount = amountEditText.getText().toString();
-                    account = selectedAccountId;
                     status = statusEditText.getText().toString().toLowerCase();
 
                     JSONObject requestBody = new JSONObject();
                     try {
 //                        requestBody.put("name", name);
+                        requestBody.put("accountleadtype", accountOrLead);
                         requestBody.put("product_id", product);
                         requestBody.put("amount", amount);
-                        requestBody.put("account_id",account);
+                        if(accountOrLead.equals("lead")){
+                            requestBody.put("lead_id",selectedAccountLeadId);
+                        }else{
+                            requestBody.put("account_id",selectedAccountLeadId);
+                        }
                         requestBody.put("status",status);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
+                    endpoint = "adddeal";
                     NetworkUtils.
-                            fetchDataPost("adddeal",
+                            fetchDataPost(endpoint,
                                     "", requestBody,AddDealActivity.this,
                                     AddDealActivity.this);
 
@@ -173,7 +202,7 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
                 ((EditText) v).setText(array[i]);
                 dialogInterface.dismiss();
                 checkedAccount = i;
-                selectedAccountId = accountIds[i];
+                selectedAccountLeadId = accountIds[i];
             }
         });
         builder.show();
@@ -205,7 +234,8 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Deal")){
+            if (result != null && result.contains("Deal")
+             && endpoint.contains("submitadddeal")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -233,7 +263,8 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")){
+            else if(result != null && result.contains("\"accounts\":")
+                    && endpoint.contains("accountsproducts")){
 
                 try {
                     // Create a JSONObject from the response string
@@ -270,12 +301,14 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
                     String[] accountNamesArray = accountNames.toArray(new String[0]);
                     String[] accountIdsArray = accountIds.toArray(new String[0]);
 
-                    accountEditText.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            showAccountDialog(view,accountNamesArray,accountIdsArray);
-                        }
-                    });
+//                    accountEditText.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            showAccountDialog(view,accountNamesArray,accountIdsArray);
+//                        }
+//                    });
+
+
 
                     JSONObject jsonObject2 = jsonArray.getJSONObject(0);
                     JSONArray products = jsonObject2.getJSONArray("products");

@@ -57,6 +57,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
     private Integer checkedAccount=-1;
     private Integer checkedContact=-1;
     private String dateToBeSaved;
+    private String endpoint;
 
 
     @Override
@@ -77,8 +78,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Task");
 
+        endpoint = "accountscontacts";
         NetworkUtils.
-                fetchDataGet("accountscontacts",
+                fetchDataGet(endpoint,
                         "",AddTaskActivity.this,
                         AddTaskActivity.this);
 
@@ -190,8 +192,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
                         e.printStackTrace();
                     }
 
+                    endpoint = "addtask";
                     NetworkUtils.
-                            fetchDataPost("addtask",
+                            fetchDataPost(endpoint,
                                     "", requestBody,AddTaskActivity.this,
                                     AddTaskActivity.this);
 
@@ -246,7 +249,9 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Task")){
+            if (result != null && result.contains("Task") &&
+            endpoint.contains( "addtask")){
+
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -273,7 +278,8 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")) {
+            else if(result != null && result.contains("\"accounts\":")
+            && endpoint.contains("accountscontacts")) {
 
                 try {
                     // Create a JSONObject from the response string

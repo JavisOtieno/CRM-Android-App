@@ -37,6 +37,7 @@ public class EditLeadActivity extends AppCompatActivity implements OnSuccessList
     private String accountName;
     private String phone;
     private boolean isTaskRunning = false;
+    private String endpoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,10 @@ public class EditLeadActivity extends AppCompatActivity implements OnSuccessList
 
         String leadId = getIntent().getStringExtra("leadId");
 
+        endpoint = "lead/"+leadId;
+
         NetworkUtils.
-                fetchDataGet("lead/"+leadId,
+                fetchDataGet(endpoint,
                         "",EditLeadActivity.this,
                         EditLeadActivity.this);
 
@@ -99,8 +102,9 @@ public class EditLeadActivity extends AppCompatActivity implements OnSuccessList
                         e.printStackTrace();
                     }
 
+                    endpoint = "submiteditlead/"+leadId;
                     NetworkUtils.
-                            fetchDataPost("submiteditlead/"+leadId,
+                            fetchDataPost(endpoint,
                                     "", requestBody,EditLeadActivity.this,
                                     EditLeadActivity.this);
 
@@ -136,7 +140,7 @@ public class EditLeadActivity extends AppCompatActivity implements OnSuccessList
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Lead")){
+            if (result != null && result.contains("Lead") && endpoint.contains("submiteditlead")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -163,7 +167,8 @@ public class EditLeadActivity extends AppCompatActivity implements OnSuccessList
                 }
 
             }
-            else if(result != null && result.contains("\"lead\":")){
+            else if(result != null && result.contains("\"lead\":") &&
+                    !endpoint.contains("submiteditlead")){
 
                 try {
                     // Create a JSONObject from the response string

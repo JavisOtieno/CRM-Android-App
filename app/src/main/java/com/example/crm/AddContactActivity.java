@@ -41,6 +41,7 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
     private Integer checkedStatus=-1;
     private Integer checkedAccount=-1;
     private Button importButton;
+    private String endpoint;
 
 
     @Override
@@ -61,8 +62,9 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
         actionBar.setHomeButtonEnabled(true);
         actionBar.setTitle("Add Contact");
 
+        endpoint = "accounts";
         NetworkUtils.
-                fetchDataGet("accounts",
+                fetchDataGet(endpoint,
                         "",AddContactActivity.this,
                         AddContactActivity.this);
 
@@ -126,8 +128,9 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
                         e.printStackTrace();
                     }
 
+                    endpoint = "addcontact";
                     NetworkUtils.
-                            fetchDataPost("addcontact",
+                            fetchDataPost( endpoint,
                                     "", requestBody,AddContactActivity.this,
                                     AddContactActivity.this);
 
@@ -163,7 +166,8 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
             String result = responseBody.string();
             System.out.println("Result: "+result);
 
-            if (result != null && result.contains("Contact")){
+            if (result != null && result.contains("Contact")
+                    && endpoint.contains("submitaddcontact") ){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
@@ -190,7 +194,8 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
                 }
 
             }
-            else if(result != null && result.contains("\"accounts\":")){
+            else if(result != null && result.contains("\"accounts\":")
+                    && endpoint.contains("accounts")){
 
                 try {
                     // Create a JSONObject from the response string

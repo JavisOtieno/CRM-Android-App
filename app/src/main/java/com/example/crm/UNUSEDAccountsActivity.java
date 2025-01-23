@@ -114,7 +114,7 @@ public class UNUSEDAccountsActivity extends AppCompatActivity implements OnSucce
                         for (int i = 0; i < accounts.length(); i++) {
                             Account obj = new Account();
                             //obj.image = drw_arr.getResourceId(i, -1);
-                            obj.name = accounts.getJSONObject(i).getString("name");
+                            obj.account_name = accounts.getJSONObject(i).getString("name");
                             obj.address = accounts.getJSONObject(i).getString("address");
                             obj.phone = accounts.getJSONObject(i).getString("phone");
                             obj.website = accounts.getJSONObject(i).getString("website");
