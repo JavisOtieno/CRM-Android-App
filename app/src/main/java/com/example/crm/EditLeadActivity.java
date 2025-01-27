@@ -178,9 +178,12 @@ public class EditLeadActivity extends AppCompatActivity implements OnSuccessList
                     List<String> accountIds = new ArrayList<>();
 
                     JSONObject lead = jsonObject.getJSONObject("lead");
+
+                    accountNameEditText.setText(lead.getJSONArray("contacts").
+                            getJSONObject(0).getString("name"));
+                    phoneEditText.setText(lead.getJSONArray("contacts").
+                            getJSONObject(0).getString("phone"));
                     leadNameEditText.setText(lead.getString("name"));
-                    phoneEditText.setText(lead.getString("phone"));
-                    accountNameEditText.setText(lead.getString("account_name"));
 
 
 

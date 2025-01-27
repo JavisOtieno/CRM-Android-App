@@ -235,7 +235,7 @@ public class AddDealActivity extends AppCompatActivity implements OnSuccessListe
             System.out.println("Result: "+result);
 
             if (result != null && result.contains("Deal")
-             && endpoint.contains("submitadddeal")){
+             && endpoint.contains("adddeal")){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&

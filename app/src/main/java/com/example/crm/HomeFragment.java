@@ -475,6 +475,7 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
             JSONArray products = jsonObject.getJSONArray("products");
             System.out.println("Accounts length: "+products.length());
 
+
             for (int i = 0; i < products.length(); i++) {
                 Product obj = new Product();
                 //obj.image = drw_arr.getResourceId(i, -1);
@@ -482,8 +483,13 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
                 obj.name = products.getJSONObject(i).getString("name");
                 obj.target_type = products.getJSONObject(i).getString("target_type");
                 Integer target_amount = Integer.valueOf(products.getJSONObject(i).getString("target_amount"));
-                Integer current_sold = Integer.valueOf(products.getJSONObject(i).getString("deals_sum_amount"));
-//                Integer current_sold = 0;
+                String dealsSumAmount = products.getJSONObject(i).getString("deals_sum_amount");
+                Integer current_sold = 0;
+                if(!dealsSumAmount.equals("null")){
+                    current_sold = Integer.valueOf(dealsSumAmount);
+                }
+
+//                Integer current_sold = 0;'leadsThisMonth',
                 Integer remainder = target_amount - current_sold;
 
 
@@ -510,6 +516,7 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
                 items.add(obj);
 
             }
+
 
             if (items.isEmpty()) {
                 recyclerView.setVisibility(View.GONE);

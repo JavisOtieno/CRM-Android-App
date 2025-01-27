@@ -78,9 +78,14 @@ public class ConvertLeadActivity extends AppCompatActivity implements OnSuccessL
         try {
             JSONObject lead = new JSONObject(leadString);
 
-            contactNameEditText.setText(lead.getString("name"));
-            contactPhoneEditText.setText(lead.getString("phone"));
-            accountNameEditText.setText(lead.getString("account_name"));
+            contactNameEditText.setText(
+                    lead.getJSONArray("contacts").
+                            getJSONObject(0).getString("name"));
+            contactPhoneEditText.setText(
+                    lead.getJSONArray("contacts").
+                            getJSONObject(0).getString("phone"));
+            accountNameEditText.setText(
+                    lead.getString("name"));
             mLeadId = lead.getString("id");
 
 

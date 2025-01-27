@@ -287,9 +287,11 @@ public class LeadsActivity extends AppCompatActivity implements OnSuccessListene
                 Contact obj = new Contact();
                 //obj.image = drw_arr.getResourceId(i, -1);
                 obj.id = leads.getJSONObject(i).getString("id");
-                obj.name = leads.getJSONObject(i).getString("name");
-                obj.phone = leads.getJSONObject(i).getString("phone");
-                obj.account_name = leads.getJSONObject(i).getString("account_name");
+                obj.account_name = leads.getJSONObject(i).getString("name");
+                obj.phone = leads.getJSONObject(i).getJSONArray("contacts")
+                        .getJSONObject(0).getString("phone");
+                obj.name = leads.getJSONObject(i).getJSONArray("contacts")
+                        .getJSONObject(0).getString("name");
 
                 String createdAt = leads.getJSONObject(i).getString("created_at");
                 ZonedDateTime dateTime = Instant.parse(createdAt).atZone(ZoneId.of("Africa/Nairobi"));

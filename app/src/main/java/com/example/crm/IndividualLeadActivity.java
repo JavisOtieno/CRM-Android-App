@@ -110,9 +110,11 @@ public class IndividualLeadActivity extends AppCompatActivity implements OnSucce
 
                     JSONObject lead = jsonObject.getJSONObject("lead");
 
-                    contactNameTextView.setText(lead.getString("name"));
-                    contactPhoneTextView.setText(lead.getString("phone"));
-                    accountNameTextView.setText(lead.getString("account_name"));
+                    contactNameTextView.setText(lead.getJSONArray("contacts").
+                            getJSONObject(0).getString("name"));
+                    contactPhoneTextView.setText(lead.getJSONArray("contacts").
+                            getJSONObject(0).getString("phone"));
+                    accountNameTextView.setText(lead.getString("name"));
 
                     convertLeadButton.setOnClickListener(new View.OnClickListener() {
                         @Override

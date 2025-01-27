@@ -167,7 +167,7 @@ public class AddContactActivity extends AppCompatActivity implements OnSuccessLi
             System.out.println("Result: "+result);
 
             if (result != null && result.contains("Contact")
-                    && endpoint.contains("submitaddcontact") ){
+                    && endpoint.contains("addcontact") ){
 
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.has("status") &&
