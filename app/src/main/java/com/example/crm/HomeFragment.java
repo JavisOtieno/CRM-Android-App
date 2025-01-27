@@ -205,7 +205,7 @@ public class HomeFragment extends Fragment implements OnSuccessListener {
         addDealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), AddDealActivity.class);
+                Intent intent = new Intent(getContext(), SelectLeadAccountActivity.class);
                 startActivity(intent);
             }
         });
