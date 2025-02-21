@@ -46,7 +46,7 @@ public class UNUSEDAccountsActivity extends AppCompatActivity implements OnSucce
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_accounts);
+        setContentView(R.layout.unused_activity_accounts);
 
         mNoAccountsTextView = (TextView) findViewById(R.id.noAccountsText);
 

@@ -103,7 +103,7 @@ public class DealsFragment extends Fragment implements OnSuccessListener  {
         //drw_arr = this.getResources().obtainTypedArray(R.array.people_images);
         //name_arr = this.getResources().getStringArray(R.array.people_names);
         emptyView = (TextView) view.findViewById(R.id.empty_view);
-//        errorLoadingRelativeLayout = view.findViewById(R.id.errorLoading);
+//        errorLoadingRelativeLayout = view.findVi/ewById(R.id.errorLoading);
         mNoSalesTextView = (TextView) view.findViewById(R.id.noSalesText);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

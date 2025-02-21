@@ -17,7 +17,7 @@ public class DealsActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_accounts);
+        setContentView(R.layout.unused_activity_accounts);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

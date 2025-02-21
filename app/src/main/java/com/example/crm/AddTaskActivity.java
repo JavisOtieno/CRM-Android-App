@@ -58,6 +58,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
     private Integer checkedContact=-1;
     private String dateToBeSaved;
     private String endpoint;
+    private Integer checkedType=-1;
 
 
     @Override
@@ -240,6 +241,7 @@ public class AddTaskActivity extends AppCompatActivity implements OnSuccessListe
         });
         builder.show();
     }
+
 
     @Override
     public void onSuccess(ResponseBody responseBody) {
