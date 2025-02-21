@@ -535,6 +535,7 @@ android:orientation="vertical">
                     android:paddingLeft="@dimen/spacing_medium"
                     android:paddingRight="@dimen/spacing_medium">
 
+
                     <ImageButton
                         android:layout_width="@dimen/spacing_xmlarge"
                         android:layout_height="@dimen/spacing_xmlarge"
