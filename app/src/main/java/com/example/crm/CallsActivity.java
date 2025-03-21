@@ -262,6 +262,9 @@ public class CallsActivity extends AppCompatActivity implements OnSuccessListene
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onBackPressed();
+            Intent intent = new Intent(CallsActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
             return true;
         }
         else if (item.getItemId() == R.id.action_add) {
