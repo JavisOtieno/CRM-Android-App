@@ -313,6 +313,7 @@ public class LeadsActivity extends AppCompatActivity implements OnSuccessListene
                 recyclerView.setVisibility(View.VISIBLE);
                 emptyView.setVisibility(View.GONE);
             }
+            //commit after compromise
 
 
             //set data and list adapter
